@@ -704,3 +704,56 @@ footer p {
     font-size: 42px;
   }
 }
+@media (max-width: 600px) {
+  .brand {
+    font-size: 22px;
+    letter-spacing: 5px;
+  }
+
+  .launch-slider {
+    padding: 36px 22px;
+  }
+
+  .slider-text h1 {
+    font-size: 46px;
+  }
+
+  .slider-image img {
+    height: 300px;
+  }
+
+  h2 {
+    font-size: 38px;
+  }
+
+  .ritual-grid button {
+    padding: 24px 16px;
+  }
+
+  .ritual-grid h3,
+  .product-card h3,
+  .ingredient-grid h3 {
+    font-size: 32px;
+  }
+
+  .product-card img {
+    height: 280px;
+  }
+
+  .product-card strong {
+    font-size: 28px;
+  }
+
+  .set h2,
+  .story-preview h2 {
+    font-size: 40px;
+  }
+
+  .ingredient-grid div {
+    padding: 24px 16px;
+  }
+
+  footer h3 {
+    font-size: 32px;
+  }
+}
