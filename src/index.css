@@ -1,0 +1,280 @@
+body {
+  margin: 0;
+  background: #f7efe6;
+  color: #33251d;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.site {
+  background: #f7efe6;
+}
+
+.nav {
+  height: 92px;
+  padding: 0 70px;
+  background: #fbf4ed;
+  border-bottom: 1px solid #dcc8bd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav img {
+  width: 110px;
+}
+
+.nav div {
+  display: flex;
+  gap: 34px;
+}
+
+.nav a {
+  text-decoration: none;
+  color: #5f4b40;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+
+.hero {
+  text-align: center;
+  padding: 80px 24px 100px;
+}
+
+.hero-logo {
+  width: 420px;
+  max-width: 86%;
+  margin-bottom: 25px;
+}
+
+.eyebrow {
+  color: #a75663;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 12px;
+}
+
+h1 {
+  font-size: 64px;
+  font-weight: 400;
+  margin: 18px 0;
+}
+
+.hero p,
+.sub,
+.story p {
+  max-width: 720px;
+  margin: auto;
+  color: #6b5548;
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+.button {
+  display: inline-block;
+  margin-top: 34px;
+  padding: 16px 38px;
+  background: #a75663;
+  color: #fff4ee;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 13px;
+}
+
+section {
+  padding: 90px 70px;
+  text-align: center;
+}
+
+h2 {
+  font-size: 46px;
+  font-weight: 400;
+  margin: 15px 0;
+}
+
+.collection {
+  background: #ead7c9;
+}
+
+.collection-img {
+  width: 950px;
+  max-width: 100%;
+  display: block;
+  margin: 45px auto;
+  border-radius: 8px;
+}
+
+.cards,
+.ritual-flow,
+.ingredient-grid,
+.journal-grid {
+  display: grid;
+  gap: 24px;
+}
+
+.cards {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.card,
+.ingredient,
+.journal-grid div,
+.ritual-flow div {
+  background: #fbf4ed;
+  border: 1px solid #d7bfb3;
+  padding: 34px;
+}
+
+.card h3 {
+  color: #a75663;
+  font-size: 32px;
+  font-weight: 400;
+}
+
+.card h4 {
+  font-size: 17px;
+  font-weight: 400;
+  color: #3a2a22;
+}
+
+.card p,
+.ingredient p,
+.ritual-flow p {
+  color: #6b5548;
+  line-height: 1.7;
+}
+
+.ritual {
+  background: #f7efe6;
+}
+
+.ritual-flow {
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 42px;
+}
+
+.ritual-flow span {
+  display: inline-flex;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #a75663;
+  color: #fff4ee;
+  align-items: center;
+  justify-content: center;
+}
+
+.ingredients {
+  background: #fbf4ed;
+}
+
+.ingredient-grid {
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: 42px;
+}
+
+.ingredient h3 {
+  color: #a75663;
+  font-weight: 400;
+  font-size: 24px;
+}
+
+.journal {
+  background: #f7efe6;
+}
+
+.journal-grid {
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: 42px;
+}
+
+.story {
+  background: #3a2a22;
+  color: #fff4ee;
+}
+
+.story h2,
+.story .eyebrow {
+  color: #fff4ee;
+}
+
+.story p {
+  color: #ead7c9;
+}
+
+footer {
+  background: #8d4f4f;
+  color: #fff4ee;
+  text-align: center;
+  padding: 55px;
+}
+
+footer h3 {
+  letter-spacing: 6px;
+  font-weight: 400;
+}
+
+@media (max-width: 800px) {
+  .nav {
+    padding: 0 22px;
+  }
+
+  .nav div {
+    display: none;
+  }
+
+  h1 {
+    font-size: 42px;
+  }
+
+  h2 {
+    font-size: 34px;
+  }
+
+  section {
+    padding: 60px 24px;
+  }
+
+  .cards,
+  .ritual-flow,
+  .ingredient-grid,
+  .journal-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.hero,
+.collection,
+.ingredients,
+.journal {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::after,
+.collection::after,
+.ingredients::after {
+  content: "✦";
+  position: absolute;
+  font-size: 180px;
+  color: #a75663;
+  opacity: 0.06;
+  right: 8%;
+  top: 15%;
+}
+
+.collection::before,
+.ritual::before {
+  content: "❦";
+  position: absolute;
+  font-size: 120px;
+  color: #a75663;
+  opacity: 0.08;
+  left: 6%;
+  top: 12%;
+}
+
+.collection,
+.ritual {
+  position: relative;
+}
