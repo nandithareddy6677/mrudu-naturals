@@ -1587,11 +1587,11 @@ button {
   }
 
   .hero-image {
-    height: 100% !important;
-    width: 100% !important;
-    object-fit: cover !important;
-    object-position: center center !important;
-  }
+  width: 100% !important;
+  height: auto !important;
+  object-fit: contain !important;
+  display: block !important;
+}
 
   .hero-explore-btn {
     position: absolute !important;
