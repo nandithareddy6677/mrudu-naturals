@@ -1,19 +1,28 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  background: #f7efe6;
+  background: #d8c2a4;
   color: #33251d;
   font-family: Georgia, "Times New Roman", serif;
 }
 
 .site {
-  background: #f7efe6;
+  background: #efe0c8;
+  border: 12px solid #7c2432;
+  overflow-x: hidden;
 }
 
+/* NAV */
 .nav {
   height: 92px;
   padding: 0 70px;
-  background: #fbf4ed;
-  border-bottom: 1px solid #dcc8bd;
+  background: #fff6e8;
+  border-bottom: 1px solid #b48a52;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -30,15 +39,47 @@ body {
 
 .nav a {
   text-decoration: none;
-  color: #5f4b40;
+  color: #4e3429;
   text-transform: uppercase;
   font-size: 12px;
   letter-spacing: 2px;
 }
 
+/* HERO */
 .hero {
   text-align: center;
-  padding: 80px 24px 100px;
+  padding: 90px 24px 110px;
+  background:
+    radial-gradient(circle at top left, rgba(180, 138, 82, 0.20), transparent 35%),
+    radial-gradient(circle at bottom right, rgba(124, 36, 50, 0.14), transparent 35%),
+    linear-gradient(180deg, #f6ead4, #dcc3a1);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before,
+.collection::before,
+.ritual::before,
+.ingredients::before,
+.journal::before,
+.story::before {
+  content: "";
+  position: absolute;
+  inset: 24px;
+  border: 1px solid #8b6a42;
+  pointer-events: none;
+}
+
+.hero::after,
+.collection::after,
+.ingredients::after {
+  content: "✦";
+  position: absolute;
+  font-size: 150px;
+  color: #7c2432;
+  opacity: 0.06;
+  right: 8%;
+  top: 12%;
 }
 
 .hero-logo {
@@ -48,7 +89,7 @@ body {
 }
 
 .eyebrow {
-  color: #a75663;
+  color: #7c2432;
   text-transform: uppercase;
   letter-spacing: 3px;
   font-size: 12px;
@@ -58,6 +99,7 @@ h1 {
   font-size: 64px;
   font-weight: 400;
   margin: 18px 0;
+  color: #5b1b27;
 }
 
 .hero p,
@@ -65,7 +107,7 @@ h1 {
 .story p {
   max-width: 720px;
   margin: auto;
-  color: #6b5548;
+  color: #5f4632;
   font-size: 18px;
   line-height: 1.8;
 }
@@ -74,16 +116,18 @@ h1 {
   display: inline-block;
   margin-top: 34px;
   padding: 16px 38px;
-  background: #a75663;
+  background: #7c2432;
   color: #fff4ee;
   text-decoration: none;
   text-transform: uppercase;
   letter-spacing: 2px;
   font-size: 13px;
+  border: 1px solid #b98a45;
 }
 
+/* GENERAL SECTIONS */
 section {
-  padding: 90px 70px;
+  padding: 100px 70px;
   text-align: center;
 }
 
@@ -91,20 +135,29 @@ h2 {
   font-size: 46px;
   font-weight: 400;
   margin: 15px 0;
+  color: #5b1b27;
 }
 
+/* COLLECTION */
 .collection {
-  background: #ead7c9;
+  background:
+    linear-gradient(rgba(239, 224, 200, 0.96), rgba(239, 224, 200, 0.96)),
+    radial-gradient(circle at top left, rgba(124, 36, 50, 0.12), transparent 35%),
+    #ead7c3;
+  position: relative;
+  overflow: hidden;
 }
 
 .collection-img {
-  width: 950px;
+  width: 980px;
   max-width: 100%;
   display: block;
   margin: 45px auto;
-  border-radius: 8px;
+  border: 1px solid #8b6a42;
+  box-shadow: 0 24px 55px rgba(60, 35, 18, 0.25);
 }
 
+/* CARDS */
 .cards,
 .ritual-flow,
 .ingredient-grid,
@@ -121,13 +174,14 @@ h2 {
 .ingredient,
 .journal-grid div,
 .ritual-flow div {
-  background: #fbf4ed;
-  border: 1px solid #d7bfb3;
+  background: #fff6e8;
+  border: 1px solid #b48a52;
   padding: 34px;
+  box-shadow: 0 14px 28px rgba(75, 38, 20, 0.12);
 }
 
 .card h3 {
-  color: #a75663;
+  color: #7c2432;
   font-size: 32px;
   font-weight: 400;
 }
@@ -145,8 +199,10 @@ h2 {
   line-height: 1.7;
 }
 
+/* RITUAL */
 .ritual {
-  background: #f7efe6;
+  background: #f3e6cf;
+  position: relative;
 }
 
 .ritual-flow {
@@ -159,14 +215,20 @@ h2 {
   width: 46px;
   height: 46px;
   border-radius: 50%;
-  background: #a75663;
+  background: #7c2432;
   color: #fff4ee;
   align-items: center;
   justify-content: center;
 }
 
+/* INGREDIENTS */
 .ingredients {
-  background: #fbf4ed;
+  background:
+    linear-gradient(rgba(255, 246, 232, 0.95), rgba(255, 246, 232, 0.95)),
+    radial-gradient(circle at bottom left, rgba(180, 138, 82, 0.16), transparent 35%),
+    #fbf4ed;
+  position: relative;
+  overflow: hidden;
 }
 
 .ingredient-grid {
@@ -175,13 +237,16 @@ h2 {
 }
 
 .ingredient h3 {
-  color: #a75663;
+  color: #7c2432;
   font-weight: 400;
   font-size: 24px;
 }
 
+/* JOURNAL */
 .journal {
-  background: #f7efe6;
+  background: #efe0c8;
+  position: relative;
+  overflow: hidden;
 }
 
 .journal-grid {
@@ -189,25 +254,74 @@ h2 {
   margin-top: 42px;
 }
 
+/* STORY */
 .story {
-  background: #3a2a22;
+  background:
+  radial-gradient(circle at top left,
+    rgba(150, 100, 50, 0.18) 0%,
+    transparent 35%),
+
+  radial-gradient(circle at bottom right,
+    rgba(124, 36, 50, 0.15) 0%,
+    transparent 35%),
+
+  linear-gradient(
+    180deg,
+    #ecd6b0 0%,
+    #e4c49a 45%,
+    #d4ae81 100%
+  );
   color: #fff4ee;
+  position: relative;
+  overflow: hidden;
 }
 
 .story h2,
 .story .eyebrow {
-  color: #fff4ee;
+  color: #6a1f2b;
 }
 
 .story p {
-  color: #ead7c9;
+  color: #5f4333;
 }
 
+/* EXTERNAL BODY RITUAL HERO BORDER */
+.dawn-banner,
+.body-ritual-hero,
+.external-hero {
+  background: #e7d3b4;
+  padding: 38px;
+  border-top: 2px solid #7c2432;
+  border-bottom: 2px solid #7c2432;
+  position: relative;
+}
+
+.dawn-banner::before,
+.body-ritual-hero::before,
+.external-hero::before {
+  content: "";
+  position: absolute;
+  inset: 18px;
+  border: 1px solid #8b6a42;
+  pointer-events: none;
+}
+
+.dawn-banner img,
+.body-ritual-hero img,
+.external-hero img {
+  width: 100%;
+  display: block;
+  border: 1px solid #7c2432;
+  box-shadow: 0 24px 55px rgba(60, 35, 18, 0.25);
+}
+
+/* FOOTER */
 footer {
-  background: #8d4f4f;
+  background: #7c2432;
   color: #fff4ee;
   text-align: center;
   padding: 55px;
+  border-top: 1px solid #b98a45;
 }
 
 footer h3 {
@@ -215,6 +329,7 @@ footer h3 {
   font-weight: 400;
 }
 
+/* MOBILE */
 @media (max-width: 800px) {
   .nav {
     padding: 0 22px;
@@ -242,39 +357,10 @@ footer h3 {
   .journal-grid {
     grid-template-columns: 1fr;
   }
-}
-.hero,
-.collection,
-.ingredients,
-.journal {
-  position: relative;
-  overflow: hidden;
-}
 
-.hero::after,
-.collection::after,
-.ingredients::after {
-  content: "✦";
-  position: absolute;
-  font-size: 180px;
-  color: #a75663;
-  opacity: 0.06;
-  right: 8%;
-  top: 15%;
-}
-
-.collection::before,
-.ritual::before {
-  content: "❦";
-  position: absolute;
-  font-size: 120px;
-  color: #a75663;
-  opacity: 0.08;
-  left: 6%;
-  top: 12%;
-}
-
-.collection,
-.ritual {
-  position: relative;
+  .dawn-banner,
+  .body-ritual-hero,
+  .external-hero {
+    padding: 18px;
+  }
 }

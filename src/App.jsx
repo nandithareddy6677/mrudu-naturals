@@ -1,346 +1,1240 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Routes, Route, Link, useNavigate } from "react-router-dom";
+import { FaWhatsapp, FaInstagram } from "react-icons/fa";
 import "./App.css";
 
-import surya from "./assets/surya.jpeg";
-import kaya from "./assets/kaya.jpeg";
-import sugandha from "./assets/sugandha.jpeg";
+import logo from "./assets/logo.png";
+import heroWorld from "./assets/hero-world.png";
+import heroDawn from "./assets/hero-dawn.png";
+import heroReflection from "./assets/hero-reflection.png";
+import heroBloom from "./assets/hero-bloom.png";
 
-const phone = "918328623837";
+import dawnCard from "./assets/dawn-card.png";
 
-const products = {
-  surya: {
-    name: "Surya Snana",
-    subtitle: "Radiance Body Cleanser",
-    price: "₹699",
-    image: surya,
-    desc: "A traditional bath powder crafted with herbs, lentils and flowers for a gentle daily cleansing ritual.",
-    benefits: ["Gentle cleansing", "Radiance ritual", "Soft skin feel", "Inspired by Indian Snana traditions"],
-    ingredients: "Green Gram, Masoor Dal, Oats, Rose Petals, Licorice, Vetiver, Avarampoo, Kasturi Turmeric, Orange Peel.",
-    use: "Mix 1–2 teaspoons with water or rose water. Apply on damp skin, massage gently and rinse."
-  },
-  kaya: {
-    name: "Kaya Tailam",
-    subtitle: "Abhyanga Ritual Oil",
-    price: "₹599",
-    image: kaya,
-    desc: "A nourishing pre-bath oil inspired by the ancient Indian practice of Abhyanga.",
-    benefits: ["Pre-bath nourishment", "Softens body skin", "Calming ritual", "Traditional oil massage"],
-    ingredients: "Sesame Oil, Coconut Oil, Almond Oil, Rose, Vetiver, Manjistha, Licorice and Vitamin E.",
-    use: "Massage before bath. Leave for 20–30 minutes and cleanse with Surya Snana."
-  },
-  sugandha: {
-    name: "Sugandha Snana",
-    subtitle: "Ritual Bathing Bar",
-    price: "₹399",
-    image: sugandha,
-    desc: "A fragrant bathing bar handcrafted with herbs, oils and botanical extracts.",
-    benefits: ["Daily cleansing", "Soft fragrance", "Gentle bath ritual", "Completes the body ritual"],
-    ingredients: "Natural Oils, Rose, Vetiver, Aloe, Kasturi Turmeric and botanical extracts.",
-    use: "Use during bath as a gentle ritual bathing bar. Rinse thoroughly after use."
-  }
-};
+import bloomCard from "./assets/bloom-card.png";
 
-const orderLink = (item) =>
-  `https://wa.me/${phone}?text=${encodeURIComponent(
-    `Hi MRUDU Naturals, I would like to order ${item}. Please share details.`
-  )}`;
+import theDawnProduct from "./assets/product-thedawn.png";
+import bodyRitualHero from "./assets/body-ritual-hero.png";
+import ourStoryImage from "./assets/our-story.png";
 
-export default function App() {
-  const [page, setPage] = useState("home");
-  const slides = [
-  {
-    title: "Surya Snana",
-    subtitle: "Traditional Herbal Body Cleanser",
-    text: "Crafted with herbs, lentils and flowers for a radiant cleansing ritual.",
-    image: surya,
-    page: "surya"
-  },
-  {
-    title: "Kaya Tailam",
-    subtitle: "Abhyanga Ritual Oil",
-    text: "Inspired by ancient Indian oiling traditions and daily nourishment.",
-    image: kaya,
-    page: "kaya"
-  },
-  {
-    title: "Sugandha Snana",
-    subtitle: "Ritual Bathing Bar",
-    text: "A fragrant botanical bathing experience rooted in tradition.",
-    image: sugandha,
-    page: "sugandha"
-  }
+import suvarnaProduct from "./assets/suvarna-snana.png";
+import komalaProduct from "./assets/komala-tailam.png";
+import sugandhaProduct from "./assets/sugandha-snana.png";
+import mridulaProduct from "./assets/mridula-sparsha.png";
+import faceRitualHero from "./assets/face-ritual-hero.jpg";
+import reflectionCard from "./assets/reflection-card.png";
+import productReflection from "./assets/product-thereflection.png";
+import mukhasudhhiProduct from "./assets/mukhasudhhi.jpeg";
+import shataDhautaProduct from "./assets/shata-dhauta-grita.jpeg";
+import ksheeraPushpaProduct from "./assets/ksheera-pushpa.jpeg";
+import snidhaProduct from "./assets/snidha.jpeg";
+
+
+
+const products = [
+  { image: suvarnaProduct, name: "SUVARNA SNANA", subtitle: "Golden Bath Ritual", old: 949, offer: 759, size: "250g" },
+  { image: komalaProduct, name: "KOMALA TAILAM", subtitle: "Sacred Body Oil", old: 1099, offer: 879, size: "220ml" },
+  { image: sugandhaProduct, name: "SUGANDHA SNANA", subtitle: "Ritual Bathing Bar", old: 599, offer: 479, size: "125g" },
+  { image: mridulaProduct, name: "MRIDULA SPARSHA", subtitle: "Velvet Body Butter", old: 1099, offer: 879, size: "220g" },
 ];
+const reflectionProducts = [
+  {
+    image: mukhasudhhiProduct,
+    name: "MUKHASUDHHI",
+    subtitle: "Face Cleansing Powder",
+    old: 899,
+    offer: 719,
+    size: "150",
+  },
 
-const [currentSlide, setCurrentSlide] = useState(0);
+  {
+    image: shataDhautaProduct,
+    name: "SHATA DHAUTA GHRITA",
+    subtitle: "Night Cream",
+    old: 1199,
+    offer: 959,
+    size: "100g",
+  },
 
-const nextSlide = () => {
-  setCurrentSlide((currentSlide + 1) % slides.length);
-};
+  {
+    image: snidhaProduct,
+    name: "SNIDHA",
+    subtitle: "Daily Moisturizer",
+    old: 1190,
+    offer: 952,
+    size: "50ml",
+  },
 
-const prevSlide = () => {
-  setCurrentSlide(
-    currentSlide === 0 ? slides.length - 1 : currentSlide - 1
-  );
-};
-
-  const go = (p) => {
-    setPage(p);
-    window.scrollTo(0, 0);
-  };
-
-  const ProductPage = ({ product }) => (
-    <section className="product-page">
-      <div className="product-photo">
-        <img src={product.image} alt={product.name} />
-      </div>
-
-      <div className="product-info">
-        <p className="eyebrow">MRUDU NATURALS</p>
-        <h1>{product.name}</h1>
-        <h3>{product.subtitle}</h3>
-        <p className="price">{product.price}</p>
-        <p>{product.desc}</p>
-
-        <h4>Benefits</h4>
-        <ul>
-          {product.benefits.map((b) => <li key={b}>{b}</li>)}
-        </ul>
-
-        <h4>Key Ingredients</h4>
-        <p>{product.ingredients}</p>
-
-        <h4>How to Use</h4>
-        <p>{product.use}</p>
-
-        <a className="main-btn" href={orderLink(product.name)} target="_blank">
-          Add to Cart
-        </a>
-      </div>
-    </section>
-  );
-
+  {
+    image: ksheeraPushpaProduct,
+    name: "KSHEERA PUSHPA",
+    subtitle: "Skin Milk",
+    old: 1450,
+    offer: 1160,
+    size: "50ml",
+  },
+];
+function FloatingButtons() {
   return (
-    <div className="site">
-      <div className="offer-bar">
-  <div className="marquee">
-    FIRST 50 ORDERS • 20% OFF • USE CODE RITUAL20 ✦ FREE SHIPPING ON FOUNDING COLLECTION ✦ ANCIENT RITUALS. TIMELESS GLOW. ✦ FIRST 50 ORDERS • 20% OFF • USE CODE RITUAL20
-  </div>
-</div>
-
-     <nav className="nav">
-  <button className="brand" onClick={() => go("home")}>
-  MRUDU NATURALS<span className="leaf">🍃</span>
-</button>
-    
-  <div className="nav-links">
-    <button onClick={() => go("home")}>Home</button>
-    <button onClick={() => go("surya")}>Surya Snana</button>
-    <button onClick={() => go("kaya")}>Kaya Tailam</button>
-    <button onClick={() => go("sugandha")}>Sugandha Snana</button>
-    <button onClick={() => go("story")}>Story</button>
-    <button onClick={() => go("contact")}>Contact</button>
-  </div>
-</nav>
-
-      {page === "home" && (
-        <>
-          <section className="launch-slider">
-
-  <button className="slider-arrow" onClick={prevSlide}>
-    ←
-  </button>
-
-  <div className="slider-content">
-
-    <div className="slider-text">
-      <p className="eyebrow">NEW LAUNCH</p>
-
-      <h1>{slides[currentSlide].title}</h1>
-
-      <h3>{slides[currentSlide].subtitle}</h3>
-
-      <p>{slides[currentSlide].text}</p>
-
-      <button
-        className="main-btn"
-        onClick={() => go(slides[currentSlide].page)}
+    <div className="floating-socials">
+      <a
+        href="https://wa.me/919908895612"
+        target="_blank"
+        rel="noreferrer"
+        className="floating-btn whatsapp-btn"
+        aria-label="Chat on WhatsApp"
       >
-        Shop Now
-      </button>
+        <FaWhatsapp />
+      </a>
 
-      <div className="dots">
-        {slides.map((_, index) => (
-          <span
-            key={index}
-            className={index === currentSlide ? "dot active" : "dot"}
-            onClick={() => setCurrentSlide(index)}
-          />
-        ))}
-      </div>
-
-    </div>
-
-    <div className="slider-image">
-      <img
-        src={slides[currentSlide].image}
-        alt={slides[currentSlide].title}
-      />
-    </div>
-
-  </div>
-
-  <button className="slider-arrow" onClick={nextSlide}>
-    →
-  </button>
-
-</section>
-
-          <div className="ticker">
-            Crafted With Care ✦ Rooted In Heritage ✦ Small Batch Rituals ✦ Made In India ✦
-          </div>
-
-          <section className="rituals">
-            <p className="eyebrow">Collection List</p>
-            <h2>Choose Your Ritual</h2>
-
-            <div className="ritual-grid">
-              <button onClick={() => go("kaya")}>
-                <span>01</span>
-                <h3>Nourish</h3>
-                <p>Kaya Tailam</p>
-              </button>
-
-              <button onClick={() => go("surya")}>
-                <span>02</span>
-                <h3>Cleanse</h3>
-                <p>Surya Snana</p>
-              </button>
-
-              <button onClick={() => go("sugandha")}>
-                <span>03</span>
-                <h3>Complete</h3>
-                <p>Sugandha Snana</p>
-              </button>
-            </div>
-          </section>
-
-          <section className="shop">
-            <p className="eyebrow">Featured Products</p>
-            <h2>The Founding Collection</h2>
-
-            <div className="product-grid">
-              {Object.entries(products).map(([key, product]) => (
-                <div className="product-card" key={key}>
-                  <img src={product.image} alt={product.name} />
-                  <h3>{product.name}</h3>
-                  <p>{product.subtitle}</p>
-                  <strong>{product.price}</strong>
-                  <div>
-                    <button onClick={() => go(key)}>View Product</button>
-                    <a href={orderLink(product.name)} target="_blank">Add to Cart</a>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <section className="set">
-            <p className="eyebrow">Founding Offer</p>
-            <h2>The Complete Ritual</h2>
-            <p>Surya Snana + Kaya Tailam + Sugandha Snana</p>
-            <h3><span>₹1697</span> ₹1359</h3>
-            <a href={orderLink("The Complete Ritual Set")} target="_blank">
-              Add Ritual Set to Cart
-            </a>
-          </section>
-
-          <section className="ingredients">
-            <p className="eyebrow">It’s All Natural</p>
-            <h2>Crafted with traditional botanicals.</h2>
-
-            <div className="ingredient-grid">
-              <div><h3>Rose Petals</h3><p>Softness & fragrance</p></div>
-              <div><h3>Vetiver Root</h3><p>Cooling & grounding</p></div>
-              <div><h3>Kasturi Turmeric</h3><p>Traditional glow ritual</p></div>
-              <div><h3>Licorice Root</h3><p>Radiance support</p></div>
-              <div><h3>Avarampoo</h3><p>South Indian beauty flower</p></div>
-              <div><h3>Orange Peel</h3><p>Natural refreshment</p></div>
-            </div>
-          </section>
-
-          <section className="story-preview">
-            <div>
-              <p className="eyebrow">Our Story</p>
-              <h2>Born from Indian bathing rituals.</h2>
-              <p>
-                MRUDU was created to bring forgotten Indian body-care traditions
-                back into everyday life through oiling, cleansing and fragrance.
-              </p>
-              <button className="main-btn" onClick={() => go("story")}>Know More</button>
-            </div>
-            <img
-  src="/images/logo.png"
-  alt="MRUDU Logo"
-  className="story-logo"
-/>
-          </section>
-        </>
-      )}
-
-      {page === "surya" && <ProductPage product={products.surya} />}
-      {page === "kaya" && <ProductPage product={products.kaya} />}
-      {page === "sugandha" && <ProductPage product={products.sugandha} />}
-
-      {page === "story" && (
-        <section className="story-page">
-          <p className="eyebrow">Our Story</p>
-          <h1>Why MRUDU Was Created</h1>
-          <p>
-            MRUDU NATURALS was created from a simple belief — Indian self-care
-            rituals are not old-fashioned, they are timeless.
-          </p>
-          <p>
-            Our first collection is inspired by Abhyanga, Snana and Sugandha —
-            nourishment, cleansing and fragrance.
-          </p>
-        </section>
-      )}
-
-      {page === "contact" && (
-        <section className="contact-page">
-          <h1>Reserve Your Ritual</h1>
-          <p>For orders, product questions or collaborations, message us directly.</p>
-          <a className="main-btn" href={orderLink("MRUDU Products")} target="_blank">
-            Order on WhatsApp
-          </a>
-        </section>
-      )}
-
-      <footer>
-        <div className="footer-grid">
-          <div>
-            <h3>MRUDU NATURALS</h3>
-            <p>Ancient Rituals. Timeless Glow.</p>
-          </div>
-          <div>
-            <h4>SHOP</h4>
-            <button onClick={() => go("surya")}>Surya Snana</button>
-            <button onClick={() => go("kaya")}>Kaya Tailam</button>
-            <button onClick={() => go("sugandha")}>Sugandha Snana</button>
-          </div>
-          <div>
-            <h4>CUSTOMER CARE</h4>
-            <button onClick={() => go("contact")}>Contact Us</button>
-            <p>Shipping Policy</p>
-            <p>Returns & Refunds</p>
-          </div>
-          <div>
-            <h4>FOLLOW US</h4>
-            <p>Instagram</p>
-            <p>WhatsApp</p>
-          </div>
-        </div>
-      </footer>
+      <a
+        href="https://instagram.com/mrudu.in"
+        target="_blank"
+        rel="noreferrer"
+        className="floating-btn instagram-btn"
+        aria-label="Visit Instagram"
+      >
+        <FaInstagram />
+        
+      </a>
+      
     </div>
   );
 }
+
+function Header({ cartCount, openCart, openSearch, openWishlist, wishlistCount }) {
+  return (
+    <>
+      <div className="offer-bar">
+        ✦ FIRST 50 ORDERS GET 20% OFF ✦ LAUNCH OFFER ✦ BEAUTY PRESERVED THROUGH TIME ✦
+      </div>
+
+      <header className="navbar">
+        <Link to="/">
+          <img src={logo} alt="MRUDU" className="nav-logo" />
+        </Link>
+        <nav>
+          <Link to="/">Home</Link>
+          <a href="/#chapters">Collections</a>
+          <Link to="/dawn">Body Rituals</Link>
+          <Link to="/reflection">Face Rituals</Link>
+          <a href="/#story">Our Story</a>
+          <Link to="/contact">Contact</Link>
+        </nav>
+
+        <div className="nav-icons">
+          <button className="icon-btn" onClick={openSearch}>⌕</button>
+
+          <button className="icon-btn wishlist-nav" onClick={openWishlist}>
+            ♡ <b>{wishlistCount}</b>
+          </button>
+
+          <button className="cart-btn" onClick={openCart}>
+            🛍 <b>{cartCount}</b>
+          </button>
+        </div>
+      </header>
+    </>
+  );
+}
+
+function CartDrawer({ cart, isOpen, closeCart, increaseQty, decreaseQty }) {
+  const total = cart.reduce(
+    (sum, item) => sum + item.offer * (item.qty || 1),
+    0
+  );
+
+  const [showCheckoutForm, setShowCheckoutForm] = useState(false);
+
+  const [customer, setCustomer] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    address: "",
+    city: "",
+    state: "",
+    pincode: "",
+  });
+
+  const handlePayment = async (amount) => {
+    try {
+      const res = await fetch("http://localhost:5001/create-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount }),
+      });
+
+      const order = await res.json();
+
+      const options = {
+        key: "rzp_test_SxwF7DYbKyE30C",
+        amount: total * 100,
+        currency: "INR",
+        name: "MRUDU",
+        description: "MRUDU Ritual Purchase",
+        order_id: order.id,
+        handler: async function (response) {
+  await fetch("http://localhost:5001/save-order", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      customer,
+      cart,
+      total,
+      paymentId: response.razorpay_payment_id,
+      razorpayOrderId: response.razorpay_order_id,
+    }),
+  });
+
+  window.location.href = "/success";
+},
+        theme: {
+          color: "#7c2432",
+        },
+      };
+
+      const razorpay = new window.Razorpay(options);
+      razorpay.open();
+    } catch (error) {
+      console.log(error);
+      alert("Payment Failed");
+    }
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="cart-drawer">
+      <button className="cart-close" onClick={closeCart}>×</button>
+      <h2>Your Ritual Bag</h2>
+
+      {cart.length === 0 ? (
+        <p>Your cart is empty.</p>
+      ) : (
+        <>
+          {cart.map((item) => (
+            <div className="cart-item" key={item.name}>
+              <img src={item.image} alt={item.name} />
+              <div>
+                <h4>{item.name}</h4>
+                <p>{item.subtitle}</p>
+                <strong>₹{item.offer}</strong>
+
+                <div className="qty-controls">
+                  <button onClick={() => decreaseQty(item.name)}>-</button>
+                  <span>{item.qty}</span>
+                  <button onClick={() => increaseQty(item.name)}>+</button>
+                </div>
+              </div>
+            </div>
+          ))}
+
+          <div className="cart-total">Total: ₹{total}</div>
+
+          {!showCheckoutForm && (
+            <button
+              className="checkout-btn"
+              type="button"
+              onClick={() => setShowCheckoutForm(true)}
+            >
+              Checkout
+            </button>
+          )}
+
+          {showCheckoutForm && (
+            <div className="checkout-form">
+              <h3>Shipping Details</h3>
+
+              <input
+                placeholder="Full Name"
+                value={customer.name}
+                onChange={(e) =>
+                  setCustomer({ ...customer, name: e.target.value })
+                }
+              />
+
+              <input
+                placeholder="Phone Number"
+                value={customer.phone}
+                onChange={(e) =>
+                  setCustomer({ ...customer, phone: e.target.value })
+                }
+              />
+
+              <input
+                placeholder="Email"
+                value={customer.email}
+                onChange={(e) =>
+                  setCustomer({ ...customer, email: e.target.value })
+                }
+              />
+
+              <textarea
+                placeholder="Full Address"
+                value={customer.address}
+                onChange={(e) =>
+                  setCustomer({ ...customer, address: e.target.value })
+                }
+              />
+
+              <input
+                placeholder="City"
+                value={customer.city}
+                onChange={(e) =>
+                  setCustomer({ ...customer, city: e.target.value })
+                }
+              />
+
+              <input
+                placeholder="State"
+                value={customer.state}
+                onChange={(e) =>
+                  setCustomer({ ...customer, state: e.target.value })
+                }
+              />
+
+              <input
+                placeholder="Pincode"
+                value={customer.pincode}
+                onChange={(e) =>
+                  setCustomer({ ...customer, pincode: e.target.value })
+                }
+              />
+
+              <button
+  className="checkout-btn"
+  type="button"
+  onClick={() => {
+    if (
+      !customer.name ||
+      !customer.phone ||
+      !customer.email ||
+      !customer.address ||
+      !customer.city ||
+      !customer.state ||
+      !customer.pincode
+    ) {
+      alert("Please fill all shipping details");
+      return;
+    }
+
+    handlePayment(total);
+  }}
+>
+  Pay ₹{total}
+</button>
+            </div>
+          )}
+        </>
+      )}
+    </div>
+  );
+}
+function SearchDrawer({ isOpen, closeSearch, searchTerm, setSearchTerm }) {
+  const allProducts = [...products, ...reflectionProducts];
+
+  const filteredProducts = allProducts.filter(
+    (product) =>
+      product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.subtitle.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="cart-drawer">
+      <button className="cart-close" onClick={closeSearch}>×</button>
+      <h2>Search Rituals</h2>
+
+      <input
+        className="search-input"
+        placeholder="Search Suvarna, Oil, Butter..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+
+      {searchTerm.trim() === "" && (
+        <p style={{ textAlign: "center", marginTop: "20px" }}>
+          Start typing to search rituals...
+        </p>
+      )}
+
+      {searchTerm.trim() !== "" && filteredProducts.length === 0 && (
+        <p style={{ textAlign: "center", marginTop: "20px" }}>
+          No rituals found.
+        </p>
+      )}
+
+      {searchTerm.trim() !== "" &&
+        filteredProducts.map((item) => (
+          <Link
+            to={products.find((p) => p.name === item.name) ? "/dawn#products" : "/reflection#reflection-products"}
+            className="search-result"
+            key={item.name}
+            onClick={closeSearch}
+          >
+            <img src={item.image} alt={item.name} />
+            <div>
+              <h4>{item.name}</h4>
+              <p>{item.subtitle}</p>
+              <strong>₹{item.offer}</strong>
+            </div>
+          </Link>
+        ))}
+    </div>
+  );
+}
+
+  function WishlistDrawer({ wishlist, isOpen, closeWishlist, addToCart }) {
+    if (!isOpen) return null;
+
+    return (
+      <div className="cart-drawer">
+        <button className="cart-close" onClick={closeWishlist}>×</button>
+        <h2>Your Wishlist</h2>
+
+        {wishlist.length === 0 ? (
+          <p>No products wishlisted yet.</p>
+        ) : (
+          wishlist.map((item) => (
+            <div className="cart-item" key={item.name}>
+              <img src={item.image} alt={item.name} />
+              <div>
+                <h4>{item.name}</h4>
+                <p>{item.subtitle}</p>
+                <strong>₹{item.offer}</strong>
+                <button onClick={() => addToCart(item)}>Add To Cart</button>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+    );
+  }
+
+  function HomePage({
+    cart,
+    addToCart,
+    cartOpen,
+    setCartOpen,
+    increaseQty,
+    decreaseQty,
+    searchOpen,
+    setSearchOpen,
+    wishlistOpen,
+    setWishlistOpen,
+    searchTerm,
+    setSearchTerm,
+    wishlist,
+    toggleWishlist,
+  }) {
+    const navigate = useNavigate();
+
+    const heroSlides = [
+      { image: heroWorld, button: "EXPLORE MRUDU", action: "chapters" },
+      { image: heroDawn, button: "EXPLORE THE DAWN", action: "/dawn" },
+      { image: heroReflection, button: "EXPLORE THE REFLECTION", action: "chapters", className: "reflection-slide" },
+      { image: heroBloom, button: "EXPLORE THE BLOOM", action: "chapters" },
+    ];
+
+    const [currentSlide, setCurrentSlide] = useState(0);
+
+    const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+    const prevSlide = () => setCurrentSlide((prev) => (prev === 0 ? heroSlides.length - 1 : prev - 1));
+
+    const heroClick = () => {
+      const action = heroSlides[currentSlide].action;
+      if (action.startsWith("/")) navigate(action);
+      else document.getElementById(action)?.scrollIntoView({ behavior: "smooth" });
+    };
+
+    return (
+      <div className="page">
+        <Header
+          cartCount={cart.reduce((sum, item) => sum + item.qty, 0)}
+          openCart={() => setCartOpen(true)}
+          openSearch={() => setSearchOpen(true)}
+          openWishlist={() => setWishlistOpen(true)}
+          wishlistCount={wishlist.length}
+        />
+
+        <section className="hero-wrap" id="home">
+          <button className="arrow left" onClick={prevSlide}>‹</button>
+
+          <div className="hero-frame">
+            <img
+              src={heroSlides[currentSlide].image}
+              alt="MRUDU Hero"
+              className={`hero-image ${heroSlides[currentSlide].className || ""}`}
+            />
+
+            <button
+              className={`hero-explore-btn ${heroSlides[currentSlide].className === "reflection-slide" ? "reflection-btn" : ""
+                }`}
+              onClick={heroClick}
+            >
+              {heroSlides[currentSlide].button}
+            </button>
+          </div>
+
+          <button className="arrow right" onClick={nextSlide}>›</button>
+        </section>
+
+        <section className="chapters" id="chapters">
+          <h2>THE CHAPTERS</h2>
+          <p>Enter the world of MRUDU</p>
+
+          <div className="chapter-grid">
+            <div className="chapter-card">
+              <img src={dawnCard} alt="The Dawn" />
+              <div className="chapter-content">
+                <h3>THE DAWN</h3>
+                <p>Body Ritual Collection</p>
+                <button
+                  onClick={() =>
+                    window.open("/dawn", "_blank")
+                  }
+                >
+                  EXPLORE →
+                </button>
+              </div>
+            </div>
+
+            <div className="chapter-card">
+              <img src={reflectionCard} alt="The Reflection" />
+              <div className="chapter-content">
+                <h3>THE REFLECTION</h3>
+
+                <p>Ancient Face Ritual Collection</p>
+                <button
+                  onClick={() =>
+                    window.open("/reflection", "_blank")
+                  }
+                >
+                  EXPLORE  →
+                </button>
+              </div>
+            </div>
+
+            <div className="chapter-card">
+              <img src={bloomCard} alt="The Bloom" />
+              <div className="chapter-content">
+                <h3>THE BLOOM</h3>
+                <p>Hair Ritual Collection</p>
+                <button
+  className="coming-soon-btn"
+  disabled
+>
+  COMING SOON
+</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="home-product-section">
+          <img src={theDawnProduct} alt="The Dawn Collection" />
+
+          <div>
+            <p className="small-title">THE DAWN COLLECTION</p>
+            <h2>BODY RITUALS</h2>
+            <h4>Four Timeless Rituals</h4>
+            <p>
+              A complete body ritual collection crafted with Suvarna Snana,
+              Komala Tailam, Sugandha Snana and Mridula Sparsha.
+            </p>
+
+            <button onClick={() => navigate("/dawn#products")}>
+              Explore The Dawn
+            </button>
+          </div>
+        </section>
+        <section className="home-product-section">
+
+          <img
+            src={productReflection}
+            alt="The Reflection"
+          />
+
+          <div className="home-product-content">
+
+            <p>THE REFLECTION COLLECTION</p>
+
+            <h2>FACE RITUALS</h2>
+
+            <h4>Four Timeless Rituals</h4>
+
+            <p>
+              A complete face ritual collection crafted with
+              Mukhasuddhi, Shata Dhauta Ghrita,
+              Snidha and Ksheera Pushpa.
+            </p>
+
+            <button
+              onClick={() => navigate("/reflection")}
+            >
+              EXPLORE THE REFLECTION
+            </button>
+
+          </div>
+
+        </section>
+
+        <section className="story-section" id="story">
+          <img src={ourStoryImage} alt="Our Story" />
+
+          <div>
+            <p className="small-title">OUR STORY</p>
+            <h2>MRUDU</h2>
+            <p>
+              MRUDU is a house of timeless rituals inspired by ancient feminine grace,
+              traditional beauty practices and the quiet luxury of everyday self-care.
+            </p>
+            <p>
+              Every creation preserves beauty through body, face and hair rituals
+              rooted in tradition and reimagined for today.
+            </p>
+          </div>
+        </section>
+        
+
+        <Footer />
+        <FloatingButtons />
+
+        <CartDrawer
+          cart={cart}
+          isOpen={cartOpen}
+          closeCart={() => setCartOpen(false)}
+          increaseQty={increaseQty}
+          decreaseQty={decreaseQty}
+        />
+
+        <SearchDrawer
+          isOpen={searchOpen}
+          closeSearch={() => setSearchOpen(false)}
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          addToCart={addToCart}
+        />
+
+        <WishlistDrawer
+          wishlist={wishlist}
+          isOpen={wishlistOpen}
+          closeWishlist={() => setWishlistOpen(false)}
+          addToCart={addToCart}
+        />
+      </div>
+    );
+  }
+
+  function DawnPage({
+    cart,
+    addToCart,
+    cartOpen,
+    setCartOpen,
+    increaseQty,
+    decreaseQty,
+    searchOpen,
+    setSearchOpen,
+    wishlistOpen,
+    setWishlistOpen,
+    searchTerm,
+    setSearchTerm,
+    wishlist,
+    toggleWishlist,
+  }) {
+    useEffect(() => {
+      if (window.location.hash === "#products") {
+        setTimeout(() => {
+          document.getElementById("products")?.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        }, 100);
+      }
+    }, []);
+
+    return (
+      <div className="page">
+        <Header
+          cartCount={cart.reduce((sum, item) => sum + item.qty, 0)}
+          openCart={() => setCartOpen(true)}
+          openSearch={() => setSearchOpen(true)}
+          openWishlist={() => setWishlistOpen(true)}
+          wishlistCount={wishlist.length}
+        />
+
+        <section className="dawn-banner reflection-banner">
+          <img src={bodyRitualHero} alt="The Dawn Body Ritual Collection" />
+
+          <div className="dawn-banner-btn">
+            <button
+              onClick={() =>
+                document.getElementById("products")?.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+                })
+              }
+            >
+              Explore Body Rituals
+            </button>
+          </div>
+        </section>
+
+        <section className="products-page" id="products">
+          <p className="small-title">THE DAWN COLLECTION</p>
+          <h2>BODY RITUALS</h2>
+
+          <div className="product-grid">
+            {products.map((product, index) => (
+              <div className="product-card" key={index}>
+                <button
+                  className="wishlist-btn"
+                  onClick={() => toggleWishlist(product)}
+                >
+                  {wishlist.find((item) => item.name === product.name) ? "♥" : "♡"}
+                </button>
+
+                <img src={product.image} alt={product.name} />
+                <h3>{product.name}</h3>
+                <p>{product.subtitle}</p>
+                <span>{product.size}</span>
+
+                <div className="price-row">
+                  <del>₹{product.old}</del>
+                  <strong>₹{product.offer}</strong>
+                </div>
+
+                <button onClick={() => addToCart(product)}>Add To Cart</button>
+              </div>
+            ))}
+          </div>
+
+          <Link to="/" className="back-home">← Back to Home</Link>
+        </section>
+
+        <Footer />
+
+        <CartDrawer
+          cart={cart}
+          isOpen={cartOpen}
+          closeCart={() => setCartOpen(false)}
+          increaseQty={increaseQty}
+          decreaseQty={decreaseQty}
+        />
+
+        <SearchDrawer
+          isOpen={searchOpen}
+          closeSearch={() => setSearchOpen(false)}
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          addToCart={addToCart}
+        />
+
+        <WishlistDrawer
+          wishlist={wishlist}
+          isOpen={wishlistOpen}
+          closeWishlist={() => setWishlistOpen(false)}
+          addToCart={addToCart}
+        />
+      </div>
+    );
+  }
+  function ReflectionPage({
+  cart,
+  addToCart,
+  cartOpen,
+  setCartOpen,
+  increaseQty,
+  decreaseQty,
+  searchOpen,
+  setSearchOpen,
+  wishlistOpen,
+  setWishlistOpen,
+  searchTerm,
+  setSearchTerm,
+  wishlist,
+  toggleWishlist,
+}) {
+    return (
+      <div className="page">
+
+        <Header
+          cartCount={cart.reduce((sum, item) => sum + item.qty, 0)}
+          openCart={() => setCartOpen(true)}
+          openSearch={() => setSearchOpen(true)}
+          openWishlist={() => setWishlistOpen(true)}
+          wishlistCount={wishlist.length}
+        />
+
+        <section className="dawn-banner">
+          <img
+            src={faceRitualHero}
+            alt="The Reflection Collection"
+          />
+
+          <div className="dawn-banner-btn">
+            <button
+              onClick={() =>
+                document
+                  .getElementById("reflection-products")
+                  ?.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                  })
+              }
+            >
+              Explore Face Rituals
+            </button>
+          </div>
+        </section>
+
+        <section
+          className="products-page"
+          id="reflection-products"
+        >
+          <p className="small-title">
+            THE REFLECTION COLLECTION
+          </p>
+
+          <h2>FACE RITUALS</h2>
+
+          <div className="product-grid">
+
+            {reflectionProducts.map((product, index) => (
+
+              <div className="product-card" key={index}>
+
+                <button
+                  className="wishlist-btn"
+                  onClick={() => toggleWishlist(product)}
+                >
+                  {wishlist.find(
+                    (item) => item.name === product.name
+                  )
+                    ? "♥"
+                    : "♡"}
+                </button>
+
+                <img
+                  src={product.image}
+                  alt={product.name}
+                />
+
+                <h3>{product.name}</h3>
+
+                <p>{product.subtitle}</p>
+
+                <span>{product.size}</span>
+
+                <div className="price-row">
+                  <del>₹{product.old}</del>
+                  <strong>₹{product.offer}</strong>
+                </div>
+
+                <button
+                  onClick={() => addToCart(product)}
+                >
+                  Add To Cart
+                </button>
+
+              </div>
+
+            ))}
+
+          </div>
+
+          <Link
+            to="/"
+            className="back-home"
+          >
+            ← Back to Home
+          </Link>
+
+        </section>
+
+        <Footer />
+
+        <CartDrawer
+          cart={cart}
+          isOpen={cartOpen}
+          closeCart={() => setCartOpen(false)}
+          increaseQty={increaseQty}
+          decreaseQty={decreaseQty}
+        />
+
+      </div>
+    );
+  }
+  function SuccessPage() {
+  return (
+    <div className="success-page">
+      <div className="success-card">
+        <h1>✓ Payment Successful</h1>
+
+        <p>Thank you for choosing MRUDU.</p>
+
+        <p>Your order has been placed successfully.</p>
+
+        <p className="order-id">
+          Order ID: MRD{Date.now()}
+        </p>
+
+        <Link to="/">
+          <button className="checkout-btn">
+            Continue Shopping
+          </button>
+        </Link>
+      </div>
+    </div>
+  );
+}
+function AdminOrdersPage() {
+  const [orders, setOrders] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:5001/orders")
+      .then((res) => res.json())
+      .then((data) => setOrders(data))
+      .catch((err) => console.log(err));
+  }, []);
+
+  return (
+    <div className="admin-page">
+      <h1>MRUDU Orders</h1>
+
+      {orders.length === 0 ? (
+        <p>No orders yet.</p>
+      ) : (
+        <div className="admin-table-wrap">
+          <table className="admin-table">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Date</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>City</th>
+                <th>Total</th>
+                <th>Products</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {orders.map((order) => (
+                <tr key={order.id}>
+                  <td>{order.id}</td>
+                  <td>{order.date || "-"}</td>
+                  <td>{order.customer?.name || "-"}</td>
+                  <td>{order.customer?.phone || "-"}</td>
+                  <td>{order.customer?.email || "-"}</td>
+                  <td>{order.customer?.city || "-"}</td>
+                  <td>₹{order.total}</td>
+                  <td>
+                    {order.cart?.map((item) => (
+                      <div key={item.name}>
+                        {item.name} × {item.qty}
+                      </div>
+                    )) || "-"}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      <Link to="/" className="back-home">
+        ← Back to Home
+      </Link>
+    </div>
+  );
+}
+function ShippingPolicyPage() {
+  return (
+    <div className="policy-page">
+      <h1>Shipping Policy</h1>
+
+      <p>
+        MRUDU currently ships across India.
+      </p>
+
+      <p>
+        Orders are processed within 1-3 business days.
+      </p>
+
+      <p>
+        Delivery typically takes 3-7 business days depending on location.
+      </p>
+
+      <p>
+        Once dispatched, tracking details will be shared via email or phone.
+      </p>
+    </div>
+  );
+}
+
+function PrivacyPolicyPage() {
+  return (
+    <div className="policy-page">
+      <h1>Privacy Policy</h1>
+
+      <p>
+        MRUDU respects your privacy.
+      </p>
+
+      <p>
+        Customer information collected during checkout is used only for order processing and delivery.
+      </p>
+
+      <p>
+        We never sell or share customer data with third parties.
+      </p>
+    </div>
+  );
+}
+
+function TermsPage() {
+  return (
+    <div className="policy-page">
+      <h1>Terms & Conditions</h1>
+
+      <p>
+        By placing an order on MRUDU, you agree to our policies.
+      </p>
+
+      <p>
+        Product colours and packaging may vary slightly from images shown.
+      </p>
+
+      <p>
+        MRUDU reserves the right to update pricing and policies without notice.
+      </p>
+    </div>
+  );
+}
+function ContactPage() {
+  return (
+    <div className="policy-page contact-page">
+      <h1>Contact MRUDU</h1>
+
+      <p>We would love to hear from you.</p>
+
+      <div className="contact-box">
+        <p><strong>Email:</strong> hellomrudu.in@gmail.com</p>
+        <p><strong>Phone:</strong> 9908895612</p>
+        <p><strong>Instagram:</strong> @mrudu.in</p>
+        <p><strong>Business Hours:</strong> Monday - Saturday, 10 AM - 6 PM</p>
+      </div>
+
+      <a
+        href="https://wa.me/919908895612"
+        target="_blank"
+        rel="noreferrer"
+      >
+        <button className="checkout-btn">Message on WhatsApp</button>
+      </a>
+    </div>
+  );
+}
+
+  function Footer() {
+    return (
+      <footer className="footer" id="contact">
+        <div className="footer-grid footer-clean">
+
+          <div>
+            <h4>BODY RITUALS</h4>
+            <p>Suvarna Snana</p>
+            <p>Komala Tailam</p>
+            <p>Sugandha Snana</p>
+            <p>Mridula Sparsha</p>
+          </div>
+
+          <div>
+            <h4>FACE RITUALS</h4>
+            <p>Mukhasuddhi</p>
+            <p>Shata Dhauta Ghrita</p>
+            <p>Snidha</p>
+            <p>Ksheera Pushpa</p>
+          </div>
+
+          <div>
+            <h4>CONTACT MRUDU</h4>
+            <p>Email: hellomrudu.in@gmail.com</p>
+            <p>Phone: 9908895612</p>
+            <p>Beauty preserved through time.</p>
+          </div>
+
+        </div>
+
+        <div className="newsletter-box">
+          <h4>NEWSLETTER</h4>
+          <p>Stay updated with MRUDU rituals and launch offers.</p>
+          <div>
+            <input placeholder="Enter your email" />
+            <button>Submit</button>
+          </div>
+        </div>
+
+        <div className="footer-bottom">
+
+  <div className="footer-links">
+    <Link to="/shipping-policy">Shipping Policy</Link>
+
+    <Link to="/privacy-policy">Privacy Policy</Link>
+
+    <Link to="/terms">Terms & Conditions</Link>
+
+    <Link to="/contact">Contact</Link>
+  </div>
+
+  <p>
+    © 2026 MRUDU. Beauty preserved through time.
+  </p>
+
+</div>
+      </footer>
+    );
+  }
+
+  function App() {
+    const [cart, setCart] = useState([]);
+    const [cartOpen, setCartOpen] = useState(false);
+
+    const [searchOpen, setSearchOpen] = useState(false);
+    const [wishlistOpen, setWishlistOpen] = useState(false);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [wishlist, setWishlist] = useState([]);
+
+    const addToCart = (product) => {
+      setCart((prev) => {
+        const existing = prev.find((item) => item.name === product.name);
+
+        if (existing) {
+          return prev.map((item) =>
+            item.name === product.name
+              ? { ...item, qty: (item.qty || 1) + 1 }
+              : item
+          );
+        }
+
+        return [...prev, { ...product, qty: 1 }];
+      });
+
+      setCartOpen(true);
+    };
+
+    const increaseQty = (name) => {
+      setCart((prev) =>
+        prev.map((item) =>
+          item.name === name ? { ...item, qty: (item.qty || 1) + 1 } : item
+        )
+      );
+    };
+
+    const decreaseQty = (name) => {
+      setCart((prev) =>
+        prev
+          .map((item) =>
+            item.name === name ? { ...item, qty: (item.qty || 1) - 1 } : item
+          )
+          .filter((item) => item.qty > 0)
+      );
+    };
+
+    const toggleWishlist = (product) => {
+      setWishlist((prev) => {
+        const exists = prev.find((item) => item.name === product.name);
+
+        if (exists) {
+          return prev.filter((item) => item.name !== product.name);
+        }
+
+        return [...prev, product];
+      });
+    };
+
+    return (
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <HomePage
+              cart={cart}
+              addToCart={addToCart}
+              cartOpen={cartOpen}
+              setCartOpen={setCartOpen}
+              increaseQty={increaseQty}
+              decreaseQty={decreaseQty}
+              searchOpen={searchOpen}
+              setSearchOpen={setSearchOpen}
+              wishlistOpen={wishlistOpen}
+              setWishlistOpen={setWishlistOpen}
+              searchTerm={searchTerm}
+              setSearchTerm={setSearchTerm}
+              wishlist={wishlist}
+              toggleWishlist={toggleWishlist}
+            />
+          }
+        />
+
+        <Route
+          path="/dawn"
+          element={
+            <DawnPage
+              cart={cart}
+              addToCart={addToCart}
+              cartOpen={cartOpen}
+              setCartOpen={setCartOpen}
+              increaseQty={increaseQty}
+              decreaseQty={decreaseQty}
+              searchOpen={searchOpen}
+              setSearchOpen={setSearchOpen}
+              wishlistOpen={wishlistOpen}
+              setWishlistOpen={setWishlistOpen}
+              searchTerm={searchTerm}
+              setSearchTerm={setSearchTerm}
+              wishlist={wishlist}
+              toggleWishlist={toggleWishlist}
+            />
+          }
+        />
+        <Route
+          path="/reflection"
+          element={
+            <ReflectionPage
+              cart={cart}
+              addToCart={addToCart}
+              cartOpen={cartOpen}
+              setCartOpen={setCartOpen}
+              increaseQty={increaseQty}
+              decreaseQty={decreaseQty}
+              searchOpen={searchOpen}
+              setSearchOpen={setSearchOpen}
+              wishlistOpen={wishlistOpen}
+              setWishlistOpen={setWishlistOpen}
+              searchTerm={searchTerm}
+              setSearchTerm={setSearchTerm}
+              wishlist={wishlist}
+              toggleWishlist={toggleWishlist}
+            />
+          }
+        />
+        <Route
+  path="/success"
+  element={<SuccessPage />}
+/>
+<Route path="/admin-orders" element={<AdminOrdersPage />} />
+<Route path="/shipping-policy" element={<ShippingPolicyPage />} />
+
+<Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+
+<Route path="/terms" element={<TermsPage />} />
+<Route path="/contact" element={<ContactPage />} />
+      </Routes>
+    );
+  }
+
+  export default App;
