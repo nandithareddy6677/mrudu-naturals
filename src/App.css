@@ -1580,37 +1580,27 @@ button {
     position: relative;
   }
 
-  .arrow {
-    width: 44px !important;
-    height: 44px !important;
+  .arrow{
+  width: 24px !important;
+  height: 24px !important;
 
-    border-radius: 50% !important;
+  font-size: 14px !important;
 
-    background: rgba(255,255,255,0.92) !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
 
-    color: #7c2432 !important;
+  background: rgba(255,255,255,0.75) !important;
 
-    font-size: 22px !important;
+  box-shadow: none !important;
+}
 
-    border: none !important;
+.arrow.left{
+  left: 8px !important;
+}
 
-    box-shadow: 0 6px 18px rgba(0,0,0,0.10) !important;
-
-    top: 50% !important;
-
-    transform: translateY(-50%) !important;
-
-    z-index: 15 !important;
-  }
-
-  .arrow.left {
-    left: 12px !important;
-  }
-
-  .arrow.right {
-    right: 12px !important;
-  }
-
+.arrow.right{
+  right: 8px !important;
+}
   .hero-explore-btn {
     font-size: 11px !important;
     letter-spacing: 2px !important;
