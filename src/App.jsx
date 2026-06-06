@@ -222,7 +222,7 @@ function CartDrawer({ cart, isOpen, closeCart, increaseQty, decreaseQty }) {
       const order = await res.json();
 
       const options = {
-        key: "rzp_test_SxwF7DYbKyE30C",
+        key: "rzp_live_SyJCmkdchyJK8",
         amount: total * 100,
         currency: "INR",
         name: "MRUDU",
