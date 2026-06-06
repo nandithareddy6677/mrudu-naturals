@@ -103,6 +103,8 @@ function FloatingButtons() {
 }
 
 function Header({ cartCount, openCart, openSearch, openWishlist, wishlistCount }) {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <>
       <div className="offer-bar">
@@ -110,22 +112,74 @@ function Header({ cartCount, openCart, openSearch, openWishlist, wishlistCount }
       </div>
 
       <header className="navbar">
-        <Link to="/">
-          <img src={logo} alt="MRUDU" className="nav-logo" />
-        </Link>
-        <nav>
-          <Link to="/">Home</Link>
-          <a href="/#chapters">Collections</a>
-          <Link to="/dawn">Body Rituals</Link>
-          <Link to="/reflection">Face Rituals</Link>
-          <a href="/#story">Our Story</a>
-          <Link to="/contact">Contact</Link>
+
+        <div className="mobile-nav-top">
+          <Link to="/">
+            <img src={logo} alt="MRUDU" className="nav-logo" />
+          </Link>
+
+          <div className="mobile-actions">
+
+            <button className="icon-btn" onClick={openSearch}>
+              ⌕
+            </button>
+
+            <button
+              className="icon-btn wishlist-nav"
+              onClick={openWishlist}
+            >
+              ♡ <b>{wishlistCount}</b>
+            </button>
+
+            <button className="cart-btn" onClick={openCart}>
+              🛍 <b>{cartCount}</b>
+            </button>
+
+            <button
+              className="menu-btn"
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
+              ☰
+            </button>
+
+          </div>
+        </div>
+
+        <nav className={menuOpen ? "nav-open" : ""}>
+          <Link to="/" onClick={() => setMenuOpen(false)}>
+            Home
+          </Link>
+
+          <a href="/#chapters" onClick={() => setMenuOpen(false)}>
+            Collections
+          </a>
+
+          <Link to="/dawn" onClick={() => setMenuOpen(false)}>
+            Body Rituals
+          </Link>
+
+          <Link to="/reflection" onClick={() => setMenuOpen(false)}>
+            Face Rituals
+          </Link>
+
+          <a href="/#story" onClick={() => setMenuOpen(false)}>
+            Our Story
+          </a>
+
+          <Link to="/contact" onClick={() => setMenuOpen(false)}>
+            Contact
+          </Link>
         </nav>
 
-        <div className="nav-icons">
-          <button className="icon-btn" onClick={openSearch}>⌕</button>
+        <div className="nav-icons desktop-icons">
+          <button className="icon-btn" onClick={openSearch}>
+            ⌕
+          </button>
 
-          <button className="icon-btn wishlist-nav" onClick={openWishlist}>
+          <button
+            className="icon-btn wishlist-nav"
+            onClick={openWishlist}
+          >
             ♡ <b>{wishlistCount}</b>
           </button>
 
@@ -133,6 +187,7 @@ function Header({ cartCount, openCart, openSearch, openWishlist, wishlistCount }
             🛍 <b>{cartCount}</b>
           </button>
         </div>
+
       </header>
     </>
   );

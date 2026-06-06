@@ -1423,3 +1423,148 @@ button {
     font-size: 16px;
   }
 }
+/* ================= MOBILE FIXES ================= */
+
+.menu-btn,
+.mobile-nav-top,
+.mobile-actions {
+  display: none;
+}
+
+@media (max-width: 768px) {
+
+  .page{
+    border:none !important;
+  }
+
+  .offer-bar{
+    font-size:10px !important;
+    padding:8px !important;
+    line-height:1.5;
+    letter-spacing:1px;
+  }
+
+  .navbar{
+    display:block !important;
+    padding:12px 16px !important;
+    height:auto !important;
+  }
+
+  .mobile-nav-top{
+    display:flex !important;
+    justify-content:space-between;
+    align-items:center;
+  }
+
+  .mobile-actions{
+    display:flex !important;
+    align-items:center;
+    gap:16px;
+  }
+
+  .menu-btn{
+    display:block !important;
+    background:none !important;
+    border:none !important;
+    color:#7c2432 !important;
+    font-size:28px !important;
+    padding:0 !important;
+  }
+
+  .desktop-icons{
+    display:none !important;
+  }
+
+  nav{
+    display:none !important;
+  }
+
+  nav.nav-open{
+    display:flex !important;
+    flex-direction:column;
+    gap:16px;
+    text-align:center;
+    padding-top:20px;
+  }
+
+  nav.nav-open a{
+    font-size:13px !important;
+  }
+
+  .nav-logo{
+    width:70px !important;
+    height:70px !important;
+  }
+
+  /* HERO IMAGE FIX */
+
+  .hero-frame{
+    overflow:hidden;
+  }
+
+  .hero-image{
+    width:100% !important;
+    height:auto !important;
+    object-fit:contain !important;
+  }
+
+  .reflection-slide{
+    transform:none !important;
+  }
+
+  .hero-explore-btn{
+    bottom:15px !important;
+    font-size:10px !important;
+    padding:10px 16px !important;
+  }
+
+  .arrow{
+    width:40px !important;
+    height:40px !important;
+    font-size:24px !important;
+  }
+
+  /* HOME SECTIONS */
+
+  .home-product-section{
+    flex-direction:column !important;
+    text-align:center;
+    gap:30px !important;
+  }
+
+  .home-product-section img{
+    width:100% !important;
+  }
+
+  .home-product-section h2{
+    font-size:34px !important;
+  }
+
+  .story-section{
+    display:flex !important;
+    flex-direction:column !important;
+    gap:30px;
+  }
+
+  .story-section img{
+    height:auto !important;
+  }
+
+  .story-section h2{
+    font-size:42px !important;
+  }
+
+  /* PRODUCTS */
+
+  .product-grid{
+    grid-template-columns:1fr !important;
+  }
+
+  /* FLOATING BUTTONS */
+
+  .floating-socials{
+    right:14px !important;
+    bottom:18px !important;
+  }
+
+}
