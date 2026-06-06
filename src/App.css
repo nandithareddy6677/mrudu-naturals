@@ -1213,3 +1213,213 @@ button {
 .footer-links a:hover {
   text-decoration: underline;
 }
+@media (max-width: 768px) {
+  .page {
+    border: none;
+  }
+
+  .offer-bar {
+    font-size: 10px;
+    padding: 8px;
+    letter-spacing: 1px;
+  }
+
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 12px 14px;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .nav-logo {
+    width: 54px;
+    height: 54px;
+  }
+
+  nav {
+    gap: 14px;
+    overflow-x: auto;
+    width: 100%;
+    justify-content: flex-start;
+    padding-bottom: 6px;
+  }
+
+  nav a {
+    font-size: 11px;
+    white-space: nowrap;
+    letter-spacing: 1px;
+  }
+
+  .nav-icons {
+    gap: 18px;
+    justify-content: center;
+  }
+
+  .hero-wrap {
+    overflow: hidden;
+  }
+
+  .hero-frame {
+    width: 100%;
+  }
+
+  .hero-image {
+    width: 100%;
+    height: 78vh;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .hero-explore-btn {
+    bottom: 35px;
+    padding: 12px 22px;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+  }
+
+  .arrow {
+    width: 38px;
+    height: 38px;
+    font-size: 24px;
+  }
+
+  .arrow.left {
+    left: 10px;
+  }
+
+  .arrow.right {
+    right: 10px;
+  }
+
+  .chapters,
+  .home-product-section,
+  .story-section,
+  .products-page {
+    padding: 70px 6%;
+    min-height: auto;
+  }
+
+  .chapters h2,
+  .products-page h2 {
+    font-size: 34px;
+    letter-spacing: 3px;
+  }
+
+  .chapter-grid {
+    gap: 28px;
+  }
+
+  .chapter-card {
+    width: 100%;
+    max-width: 340px;
+  }
+
+  .home-product-section {
+    flex-direction: column;
+    text-align: center;
+    gap: 35px;
+  }
+
+  .home-product-section img {
+    width: 100%;
+  }
+
+  .home-product-section h2 {
+    font-size: 38px !important;
+  }
+
+  .story-section {
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+  }
+
+  .story-section img {
+    height: auto;
+  }
+
+  .story-section h2 {
+    font-size: 46px;
+  }
+
+  .story-section p {
+    font-size: 16px;
+  }
+
+  .dawn-banner {
+    padding: 24px 4%;
+  }
+
+  .dawn-banner img {
+    max-height: none;
+    width: 100%;
+    object-fit: contain;
+  }
+
+  .product-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .product-card img {
+    height: 260px;
+  }
+
+  .cart-drawer {
+    width: 100%;
+    max-width: 100%;
+    padding: 30px 20px;
+  }
+
+  .checkout-form input,
+  .checkout-form textarea {
+    font-size: 14px;
+  }
+
+  .footer-clean {
+    grid-template-columns: 1fr !important;
+    gap: 35px;
+  }
+
+  .newsletter-box div {
+    flex-direction: column;
+  }
+
+  .newsletter-box input {
+    width: 100%;
+  }
+
+  .floating-socials {
+    right: 16px;
+    bottom: 16px;
+  }
+
+  .floating-btn {
+    width: 46px;
+    height: 46px;
+    font-size: 22px;
+  }
+
+  .success-card {
+    margin: 20px;
+    padding: 40px 24px;
+  }
+
+  .success-card h1 {
+    font-size: 34px;
+  }
+
+  .policy-page {
+    padding: 90px 7%;
+  }
+
+  .policy-page h1 {
+    font-size: 36px;
+  }
+
+  .policy-page p {
+    font-size: 16px;
+  }
+}
