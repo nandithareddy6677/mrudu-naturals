@@ -1691,3 +1691,42 @@ button {
     height: 58px !important;
   }
 }
+/* FIX DESKTOP NAV AFTER MOBILE HEADER UPDATE */
+
+@media (min-width: 769px) {
+  .navbar {
+    display: grid !important;
+    grid-template-columns: 120px 1fr 130px !important;
+    align-items: center !important;
+    height: 72px !important;
+    padding: 0 55px !important;
+  }
+
+  .mobile-nav-top {
+    display: block !important;
+  }
+
+  .mobile-actions {
+    display: none !important;
+  }
+
+  .desktop-icons {
+    display: flex !important;
+  }
+
+  .navbar nav {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 38px !important;
+  }
+
+  .navbar nav a {
+    font-size: 14px !important;
+    letter-spacing: 2px !important;
+  }
+
+  .nav-logo {
+    width: 58px !important;
+    height: 58px !important;
+  }
+}
