@@ -1730,3 +1730,32 @@ button {
     height: 58px !important;
   }
 }
+/* MOBILE CHECKOUT FIX */
+@media (max-width: 768px) {
+  .cart-drawer {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100dvh !important;
+    padding: 28px 22px 120px !important;
+    overflow-y: auto !important;
+  }
+
+  .checkout-btn {
+    display: block !important;
+    width: 100% !important;
+    margin-top: 18px !important;
+    margin-bottom: 40px !important;
+    padding: 16px 20px !important;
+    font-size: 13px !important;
+    letter-spacing: 2px !important;
+  }
+
+  .checkout-form {
+    padding-bottom: 80px !important;
+  }
+
+  .checkout-form input,
+  .checkout-form textarea {
+    font-size: 16px !important;
+  }
+}
