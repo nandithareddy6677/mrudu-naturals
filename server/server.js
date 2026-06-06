@@ -115,6 +115,8 @@ Razorpay Order ID: ${newOrder.razorpayOrderId || "-"}
   }
 });
 
-app.listen(5001, () => {
-  console.log("MRUDU server running on http://localhost:5001");
+const PORT = process.env.PORT || 5001;
+
+app.listen(PORT, () => {
+  console.log(`MRUDU server running on port ${PORT}`);
 });

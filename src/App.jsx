@@ -213,7 +213,7 @@ function CartDrawer({ cart, isOpen, closeCart, increaseQty, decreaseQty }) {
 
   const handlePayment = async (amount) => {
     try {
-      const res = await fetch("http://localhost:5001/create-order", {
+      const res = await fetch("https://mrudu-backend.onrender.com/create-order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ amount }),
@@ -229,7 +229,7 @@ function CartDrawer({ cart, isOpen, closeCart, increaseQty, decreaseQty }) {
         description: "MRUDU Ritual Purchase",
         order_id: order.id,
         handler: async function (response) {
-  await fetch("http://localhost:5001/save-order", {
+  await fetch("https://mrudu-backend.onrender.com/save-order", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
