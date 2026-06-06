@@ -491,6 +491,12 @@ function SearchDrawer({ isOpen, closeSearch, searchTerm, setSearchTerm }) {
       { image: heroReflection, button: "EXPLORE THE REFLECTION", action: "chapters", className: "reflection-slide" },
       { image: heroBloom, button: "EXPLORE THE BLOOM", action: "chapters" },
     ];
+    useEffect(() => {
+  heroSlides.forEach((slide) => {
+    const img = new Image();
+    img.src = slide.image;
+  });
+}, []);
 
     const [currentSlide, setCurrentSlide] = useState(0);
 
