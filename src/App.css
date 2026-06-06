@@ -1607,3 +1607,28 @@ button {
     padding: 12px 24px !important;
   }
 }
+@media (max-width: 768px) {
+  .arrow {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+
+    width: 28px !important;
+    height: 28px !important;
+    padding: 0 !important;
+
+    color: #7c2432 !important;
+    font-size: 24px !important;
+
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+  }
+
+  .arrow.left {
+    left: 14px !important;
+  }
+
+  .arrow.right {
+    right: 14px !important;
+  }
+}
