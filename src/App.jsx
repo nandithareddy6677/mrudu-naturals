@@ -260,13 +260,14 @@ function CartDrawer({ cart, isOpen, closeCart, increaseQty, decreaseQty }) {
     const razorpay = new window.Razorpay(options);
 
 razorpay.on("payment.failed", function (response) {
+  console.log("RAZORPAY FAILED:", response.error);
+
   alert(
-    "Razorpay Error:\n" +
+    "Razorpay Failed:\n" +
     response.error.description +
-    "\n\nReason:\n" +
+    "\nReason: " +
     response.error.reason
   );
-  console.log(response.error);
 });
 
 razorpay.open();
