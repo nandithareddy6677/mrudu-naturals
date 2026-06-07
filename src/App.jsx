@@ -222,6 +222,7 @@ function CartDrawer({ cart, isOpen, closeCart, increaseQty, decreaseQty }) {
     });
 
     const order = await res.json();
+    alert(JSON.stringify(order));
 
     if (!order.id) {
       alert("Order creation failed");
