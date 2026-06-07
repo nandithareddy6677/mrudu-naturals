@@ -272,9 +272,9 @@ razorpay.on("payment.failed", function (response) {
 
 razorpay.open();
   } catch (error) {
-    console.log(error);
-    alert("Payment Failed");
-  }
+  console.log("Payment Error:", error);
+  alert("Payment Failed: " + error.message);
+}
 };
   if (!isOpen) return null;
 
