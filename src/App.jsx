@@ -212,50 +212,59 @@ function CartDrawer({ cart, isOpen, closeCart, increaseQty, decreaseQty }) {
   });
 
   const handlePayment = async (amount) => {
-    try {
-      const res = await fetch("https://mrudu-backend.onrender.com/create-order", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount }),
-      });
+  try {
+    const keyRes = await fetch("https://mrudu-backend.onrender.com/razorpay-key");
+    const { key } = await keyRes.json();
 
-      const order = await res.json();
+    const res = await fetch("https://mrudu-backend.onrender.com/create-order", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ amount }),
+    });
 
-      const options = {
-        key: "rzp_live_SyUKbVlOTNh6iU",
-        amount: total * 100,
-        currency: "INR",
-        name: "MRUDU",
-        description: "MRUDU Ritual Purchase",
-        order_id: order.id,
-        handler: async function (response) {
-  await fetch("https://mrudu-backend.onrender.com/save-order", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      customer,
-      cart,
-      total,
-      paymentId: response.razorpay_payment_id,
-      razorpayOrderId: response.razorpay_order_id,
-    }),
-  });
+    const order = await res.json();
 
-  window.location.href = "/success";
-},
-        theme: {
-          color: "#7c2432",
-        },
-      };
-
-      const razorpay = new window.Razorpay(options);
-      razorpay.open();
-    } catch (error) {
-      console.log(error);
-      alert("Payment Failed");
+    if (!order.id) {
+      alert("Order creation failed");
+      return;
     }
-  };
 
+    const options = {
+      key: key,
+      amount: order.amount,
+      currency: order.currency,
+      name: "MRUDU",
+      description: "MRUDU Ritual Purchase",
+      order_id: order.id,
+
+      handler: async function (response) {
+        await fetch("https://mrudu-backend.onrender.com/save-order", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            customer,
+            cart,
+            total,
+            paymentId: response.razorpay_payment_id,
+            razorpayOrderId: response.razorpay_order_id,
+          }),
+        });
+
+        window.location.href = "/success";
+      },
+
+      theme: {
+        color: "#7c2432",
+      },
+    };
+
+    const razorpay = new window.Razorpay(options);
+    razorpay.open();
+  } catch (error) {
+    console.log(error);
+    alert("Payment Failed");
+  }
+};
   if (!isOpen) return null;
 
   return (
