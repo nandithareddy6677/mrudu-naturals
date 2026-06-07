@@ -83,10 +83,9 @@ app.post("/save-order", async (req, res) => {
     fs.writeFileSync(filePath, JSON.stringify(orders, null, 2));
 
     const productsList =
-      newOrder.cart
-        ?.map((item) => `${item.name} × ${item.qty}`)
-        .join("\n") || "-";
+      newOrder.cart?.map((item) => `${item.name} × ${item.qty}`).join("\n") || "-";
 
+    // Email to MRUDU
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: process.env.EMAIL_USER,
@@ -97,29 +96,54 @@ New MRUDU Order Received
 Order ID: ${newOrder.id}
 Date: ${newOrder.date}
 
-Customer Details:
-Name: ${newOrder.customer?.name || "-"}
-Phone: ${newOrder.customer?.phone || "-"}
-Email: ${newOrder.customer?.email || "-"}
-Address: ${newOrder.customer?.address || "-"}
-City: ${newOrder.customer?.city || "-"}
-State: ${newOrder.customer?.state || "-"}
-Pincode: ${newOrder.customer?.pincode || "-"}
+Customer:
+Name: ${newOrder.customer?.name}
+Phone: ${newOrder.customer?.phone}
+Email: ${newOrder.customer?.email}
+Address: ${newOrder.customer?.address}
+City: ${newOrder.customer?.city}
+State: ${newOrder.customer?.state}
+Pincode: ${newOrder.customer?.pincode}
 
 Products:
 ${productsList}
 
 Total: ₹${newOrder.total}
+Payment ID: ${newOrder.paymentId}
+      `,
+    });
 
-Payment ID: ${newOrder.paymentId || "-"}
-Razorpay Order ID: ${newOrder.razorpayOrderId || "-"}
+    // Email to customer
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: newOrder.customer?.email,
+      subject: `Thank you for shopping with MRUDU - ${newOrder.id}`,
+      text: `
+Dear ${newOrder.customer?.name},
+
+Thank you for shopping with MRUDU.
+
+Your order has been received successfully.
+
+Order ID: ${newOrder.id}
+
+Products:
+${productsList}
+
+Total Paid: ₹${newOrder.total}
+
+We will begin processing your order shortly and share tracking details once dispatched.
+
+With love,
+MRUDU
+Beauty preserved through time.
       `,
     });
 
     res.json({ success: true, orderId: newOrder.id });
   } catch (error) {
     console.error("Save Order Error:", error);
-    res.status(500).json({ success: false });
+    res.status(500).json({ success: false, error: error.message });
   }
 });
 

@@ -239,18 +239,20 @@ function CartDrawer({ cart, isOpen, closeCart, increaseQty, decreaseQty }) {
 
       handler: async function (response) {
         await fetch("https://mrudu-backend.onrender.com/save-order", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            customer,
-            cart,
-            total,
-            paymentId: response.razorpay_payment_id,
-            razorpayOrderId: response.razorpay_order_id,
-          }),
-        });
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    customer,
+    cart,
+    total,
+    paymentId: response.razorpay_payment_id,
+    razorpayOrderId: response.razorpay_order_id,
+  }),
+});
 
-        window.location.href = "/success";
+setCart([]);
+
+window.location.href = "/success";
       },
 
       theme: {
@@ -945,15 +947,23 @@ function SearchDrawer({ isOpen, closeSearch, searchTerm, setSearchTerm }) {
   return (
     <div className="success-page">
       <div className="success-card">
-        <h1>✓ Payment Successful</h1>
+        <h1>✓ Order Confirmed</h1>
 
-        <p>Thank you for choosing MRUDU.</p>
+<p>
+Thank you for shopping with MRUDU.
+</p>
 
-        <p>Your order has been placed successfully.</p>
+<p>
+Your ritual has been lovingly prepared and your order has been received successfully.
+</p>
 
-        <p className="order-id">
-          Order ID: MRD{Date.now()}
-        </p>
+<p>
+We will begin processing your order shortly and share tracking details once dispatched.
+</p>
+
+<p className="order-id">
+Order ID: MRD{Date.now()}
+</p>
 
         <Link to="/">
           <button className="checkout-btn">
