@@ -222,7 +222,7 @@ function CartDrawer({ cart, isOpen, closeCart, increaseQty, decreaseQty }) {
     });
 
     const order = await res.json();
-    alert(JSON.stringify(order));
+    
 
     if (!order.id) {
       alert("Order creation failed");
@@ -230,7 +230,7 @@ function CartDrawer({ cart, isOpen, closeCart, increaseQty, decreaseQty }) {
     }
 
     const options = {
-      key: "rzp_live_SyUKbVlOTNh6iU",
+      key: order.key,
       amount: order.amount,
       currency: order.currency,
       name: "MRUDU",
@@ -261,7 +261,7 @@ function CartDrawer({ cart, isOpen, closeCart, increaseQty, decreaseQty }) {
     const razorpay = new window.Razorpay(options);
 
 razorpay.on("payment.failed", function (response) {
-  alert(JSON.stringify(response.error));
+  
 });
 
 razorpay.open();
@@ -968,7 +968,7 @@ function AdminOrdersPage() {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5001/orders")
+   fetch("https://mrudu-backend.onrender.com/orders")
       .then((res) => res.json())
       .then((data) => setOrders(data))
       .catch((err) => console.log(err));
