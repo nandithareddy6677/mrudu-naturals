@@ -43,7 +43,7 @@ const reflectionProducts = [
     name: "MUKHASUDHHI",
     subtitle: "Face Cleansing Powder",
     old: 899,
-    offer: 1,
+    offer: 719,
     size: "150",
   },
 
