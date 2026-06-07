@@ -213,8 +213,7 @@ function CartDrawer({ cart, isOpen, closeCart, increaseQty, decreaseQty }) {
 
   const handlePayment = async (amount) => {
   try {
-    const keyRes = await fetch("https://mrudu-backend.onrender.com/razorpay-key");
-    const { key } = await keyRes.json();
+  
 
     const res = await fetch("https://mrudu-backend.onrender.com/create-order", {
       method: "POST",
@@ -230,7 +229,7 @@ function CartDrawer({ cart, isOpen, closeCart, increaseQty, decreaseQty }) {
     }
 
     const options = {
-      key: key,
+      key: "rzp_live_SyUKbVlOTNh6iU",
       amount: order.amount,
       currency: order.currency,
       name: "MRUDU",
