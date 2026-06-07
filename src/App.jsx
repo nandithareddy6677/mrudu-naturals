@@ -259,7 +259,18 @@ function CartDrawer({ cart, isOpen, closeCart, increaseQty, decreaseQty }) {
     };
 
     const razorpay = new window.Razorpay(options);
-    razorpay.open();
+
+razorpay.on("payment.failed", function (response) {
+  alert(
+    "Razorpay Error:\n" +
+    response.error.description +
+    "\n\nReason:\n" +
+    response.error.reason
+  );
+  console.log(response.error);
+});
+
+razorpay.open();
   } catch (error) {
     console.log(error);
     alert("Payment Failed");
