@@ -66,11 +66,12 @@ app.post("/save-order", async (req, res) => {
     const productsList =
       newOrder.cart?.map((item) => `${item.name} × ${item.qty}`).join("\n") || "-";
 
-    const ownerEmail = transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: process.env.EMAIL_USER,
-      subject: `New MRUDU Order - ${newOrder.id}`,
-      text: `
+    Promise.allSettled([
+      transporter.sendMail({
+        from: process.env.EMAIL_USER,
+        to: process.env.EMAIL_USER,
+        subject: `New MRUDU Order - ${newOrder.id}`,
+        text: `
 New MRUDU Order Received
 
 Order ID: ${newOrder.id}
@@ -91,14 +92,14 @@ ${productsList}
 Total: ₹${newOrder.total}
 Payment ID: ${newOrder.paymentId || "-"}
 Razorpay Order ID: ${newOrder.razorpayOrderId || "-"}
-      `,
-    });
+        `,
+      }),
 
-    const customerEmail = transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: newOrder.customer?.email,
-      subject: `Thank you for shopping with MRUDU - ${newOrder.id}`,
-      text: `
+      transporter.sendMail({
+        from: process.env.EMAIL_USER,
+        to: newOrder.customer?.email,
+        subject: `Thank you for shopping with MRUDU - ${newOrder.id}`,
+        text: `
 Dear ${newOrder.customer?.name || "Customer"},
 
 Thank you for shopping with MRUDU.
@@ -117,10 +118,9 @@ We will begin processing your order shortly and share tracking details once disp
 With love,
 MRUDU
 Beauty Preserved Through Time.
-      `,
-    });
-
-    Promise.allSettled([ownerEmail, customerEmail]).then((results) => {
+        `,
+      }),
+    ]).then((results) => {
       results.forEach((result, index) => {
         if (result.status === "rejected") {
           console.error(index === 0 ? "Owner Email Error:" : "Customer Email Error:", result.reason);

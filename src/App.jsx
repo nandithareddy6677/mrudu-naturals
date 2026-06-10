@@ -194,10 +194,7 @@ function Header({ cartCount, openCart, openSearch, openWishlist, wishlistCount }
 }
 
 function CartDrawer({ cart, setCart, isOpen, closeCart, increaseQty, decreaseQty }) {
-  const total = cart.reduce(
-    (sum, item) => sum + item.offer * (item.qty || 1),
-    0
-  );
+  const total = cart.reduce((sum, item) => sum + item.offer * (item.qty || 1), 0);
 
   const [showCheckoutForm, setShowCheckoutForm] = useState(false);
 
@@ -212,66 +209,62 @@ function CartDrawer({ cart, setCart, isOpen, closeCart, increaseQty, decreaseQty
   });
 
   const handlePayment = async (amount) => {
-  try {
-  
+    try {
+      const res = await fetch("https://mrudu-backend.onrender.com/create-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount }),
+      });
 
-    const res = await fetch("https://mrudu-backend.onrender.com/create-order", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ amount }),
-    });
+      const order = await res.json();
 
-    const order = await res.json();
-    
+      if (!order.id) {
+        alert("Order creation failed");
+        return;
+      }
 
-    if (!order.id) {
-      alert("Order creation failed");
-      return;
+      const options = {
+        key: order.key,
+        amount: order.amount,
+        currency: order.currency,
+        name: "MRUDU",
+        description: "MRUDU Ritual Purchase",
+        order_id: order.id,
+
+        handler: async function (response) {
+          const saveRes = await fetch("https://mrudu-backend.onrender.com/save-order", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              customer,
+              cart,
+              total,
+              paymentId: response.razorpay_payment_id,
+              razorpayOrderId: response.razorpay_order_id,
+            }),
+          });
+
+          const savedOrder = await saveRes.json();
+
+          setCart([]);
+          closeCart();
+
+          window.location.href = `/success?orderId=${savedOrder.orderId}`;
+        },
+
+        theme: {
+          color: "#7c2432",
+        },
+      };
+
+      const razorpay = new window.Razorpay(options);
+      razorpay.open();
+    } catch (error) {
+      console.log("Payment Error:", error);
+      alert("Payment Failed: " + error.message);
     }
+  };
 
-    const options = {
-      key: order.key,
-      amount: order.amount,
-      currency: order.currency,
-      name: "MRUDU",
-      description: "MRUDU Ritual Purchase",
-      order_id: order.id,
-
-      handler: async function (response) {
-        await fetch("https://mrudu-backend.onrender.com/save-order", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    customer,
-    cart,
-    total,
-    paymentId: response.razorpay_payment_id,
-    razorpayOrderId: response.razorpay_order_id,
-  }),
-});
-
-
-closeCart();
-window.location.href = "/success";
-      },
-
-      theme: {
-        color: "#7c2432",
-      },
-    };
-
-    const razorpay = new window.Razorpay(options);
-
-razorpay.on("payment.failed", function (response) {
-  
-});
-
-razorpay.open();
-  } catch (error) {
-  console.log("Payment Error:", error);
-  alert("Payment Failed: " + error.message);
-}
-};
   if (!isOpen) return null;
 
   return (
@@ -303,11 +296,7 @@ razorpay.open();
           <div className="cart-total">Total: ₹{total}</div>
 
           {!showCheckoutForm && (
-            <button
-              className="checkout-btn"
-              type="button"
-              onClick={() => setShowCheckoutForm(true)}
-            >
+            <button className="checkout-btn" type="button" onClick={() => setShowCheckoutForm(true)}>
               Checkout
             </button>
           )}
@@ -316,84 +305,28 @@ razorpay.open();
             <div className="checkout-form">
               <h3>Shipping Details</h3>
 
-              <input
-                placeholder="Full Name"
-                value={customer.name}
-                onChange={(e) =>
-                  setCustomer({ ...customer, name: e.target.value })
-                }
-              />
-
-              <input
-                placeholder="Phone Number"
-                value={customer.phone}
-                onChange={(e) =>
-                  setCustomer({ ...customer, phone: e.target.value })
-                }
-              />
-
-              <input
-                placeholder="Email"
-                value={customer.email}
-                onChange={(e) =>
-                  setCustomer({ ...customer, email: e.target.value })
-                }
-              />
-
-              <textarea
-                placeholder="Full Address"
-                value={customer.address}
-                onChange={(e) =>
-                  setCustomer({ ...customer, address: e.target.value })
-                }
-              />
-
-              <input
-                placeholder="City"
-                value={customer.city}
-                onChange={(e) =>
-                  setCustomer({ ...customer, city: e.target.value })
-                }
-              />
-
-              <input
-                placeholder="State"
-                value={customer.state}
-                onChange={(e) =>
-                  setCustomer({ ...customer, state: e.target.value })
-                }
-              />
-
-              <input
-                placeholder="Pincode"
-                value={customer.pincode}
-                onChange={(e) =>
-                  setCustomer({ ...customer, pincode: e.target.value })
-                }
-              />
+              <input placeholder="Full Name" value={customer.name} onChange={(e) => setCustomer({ ...customer, name: e.target.value })} />
+              <input placeholder="Phone Number" value={customer.phone} onChange={(e) => setCustomer({ ...customer, phone: e.target.value })} />
+              <input placeholder="Email" value={customer.email} onChange={(e) => setCustomer({ ...customer, email: e.target.value })} />
+              <textarea placeholder="Full Address" value={customer.address} onChange={(e) => setCustomer({ ...customer, address: e.target.value })} />
+              <input placeholder="City" value={customer.city} onChange={(e) => setCustomer({ ...customer, city: e.target.value })} />
+              <input placeholder="State" value={customer.state} onChange={(e) => setCustomer({ ...customer, state: e.target.value })} />
+              <input placeholder="Pincode" value={customer.pincode} onChange={(e) => setCustomer({ ...customer, pincode: e.target.value })} />
 
               <button
-  className="checkout-btn"
-  type="button"
-  onClick={() => {
-    if (
-      !customer.name ||
-      !customer.phone ||
-      !customer.email ||
-      !customer.address ||
-      !customer.city ||
-      !customer.state ||
-      !customer.pincode
-    ) {
-      alert("Please fill all shipping details");
-      return;
-    }
+                className="checkout-btn"
+                type="button"
+                onClick={() => {
+                  if (!customer.name || !customer.phone || !customer.email || !customer.address || !customer.city || !customer.state || !customer.pincode) {
+                    alert("Please fill all shipping details");
+                    return;
+                  }
 
-    handlePayment(total);
-  }}
->
-  Pay ₹{total}
-</button>
+                  handlePayment(total);
+                }}
+              >
+                Pay ₹{total}
+              </button>
             </div>
           )}
         </>
@@ -1285,6 +1218,7 @@ function ContactPage() {
           element={
             <DawnPage
   cart={cart}
+  setCart={setCart}
   addToCart={addToCart}
               cartOpen={cartOpen}
               setCartOpen={setCartOpen}
