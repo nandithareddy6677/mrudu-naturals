@@ -1759,3 +1759,13 @@ button {
     font-size: 16px !important;
   }
 }
+.success-card a,
+.success-card a:visited,
+.success-card a:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+.success-card button {
+  text-decoration: none;
+}
