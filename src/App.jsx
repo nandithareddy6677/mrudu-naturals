@@ -883,39 +883,30 @@ function SearchDrawer({ isOpen, closeSearch, searchTerm, setSearchTerm }) {
     );
   }
   function SuccessPage() {
+  const params = new URLSearchParams(window.location.search);
+  const orderId = params.get("orderId");
+
   return (
     <div className="success-page">
       <div className="success-card">
         <h1>✓ Order Confirmed</h1>
 
         <p>Thank you for shopping with MRUDU.</p>
+        <p>Your ritual has been received successfully and will be prepared with care.</p>
+        <p>Confirmation email will be sent shortly. Tracking details will be shared after dispatch.</p>
 
-        <p>
-          Your ritual has been received successfully.
-        </p>
-
-        <p>
-          We will begin processing your order shortly and share tracking details once dispatched.
-        </p>
-
-        <p className="order-id">
-          Beauty Preserved Through Time
-        </p>
+        {orderId && <p className="order-id">Order ID: {orderId}</p>}
 
         <Link to="/">
-          <button className="checkout-btn">
-            Continue Shopping
-          </button>
+          <button className="checkout-btn">Continue Shopping</button>
         </Link>
 
         <a
-          href="https://wa.me/919908895612?text=Hi%20MRUDU,%20I%20have%20placed%20an%20order."
+          href={`https://wa.me/919908895612?text=Hi%20MRUDU,%20I%20have%20placed%20an%20order${orderId ? `%20-%20${orderId}` : ""}.`}
           target="_blank"
           rel="noreferrer"
         >
-          <button className="checkout-btn">
-            Message MRUDU on WhatsApp
-          </button>
+          <button className="checkout-btn">Message MRUDU on WhatsApp</button>
         </a>
       </div>
     </div>
@@ -1046,6 +1037,19 @@ function TermsPage() {
     </div>
   );
 }
+function RefundPolicyPage() {
+  return (
+    <div className="policy-page">
+      <h1>Refund & Cancellation Policy</h1>
+
+      <p>Orders once placed cannot be cancelled after dispatch.</p>
+      <p>Refunds or replacements are accepted only for damaged, incorrect, or missing products.</p>
+      <p>Customers must contact us within 48 hours of delivery with order details and clear photos.</p>
+      <p>Approved refunds will be processed to the original payment method within 5-7 business days.</p>
+      <p>For support, contact hellomrudu.in@gmail.com or WhatsApp 9908895612.</p>
+    </div>
+  );
+}
 function ContactPage() {
   return (
     <div className="policy-page contact-page">
@@ -1102,13 +1106,14 @@ function ContactPage() {
         </div>
 
         <div className="newsletter-box">
-          <h4>NEWSLETTER</h4>
-          <p>Stay updated with MRUDU rituals and launch offers.</p>
-          <div>
-            <input placeholder="Enter your email" />
-            <button>Submit</button>
-          </div>
-        </div>
+  <h4>NEWSLETTER</h4>
+  <p>Stay updated with MRUDU rituals and launch offers.</p>
+
+  <a href="mailto:hellomrudu.in@gmail.com?subject=MRUDU Newsletter Subscription&body=Hi MRUDU, please add me to your newsletter.">
+    <button>Subscribe</button>
+  </a>
+</div>
+
 
         <div className="footer-bottom">
 
@@ -1120,6 +1125,7 @@ function ContactPage() {
     <Link to="/terms">Terms & Conditions</Link>
 
     <Link to="/contact">Contact</Link>
+    <Link to="/refund-policy">Refund Policy</Link>
   </div>
 
   <p>
@@ -1268,6 +1274,7 @@ function ContactPage() {
 
 <Route path="/terms" element={<TermsPage />} />
 <Route path="/contact" element={<ContactPage />} />
+<Route path="/refund-policy" element={<RefundPolicyPage />} />
       </Routes>
     );
   }

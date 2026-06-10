@@ -33,15 +33,8 @@ app.get("/", (req, res) => {
   res.send("MRUDU SERVER RUNNING");
 });
 
-app.get("/orders", (req, res) => {
-  const filePath = path.resolve(__dirname, "orders.json");
-  let orders = [];
-
-  if (fs.existsSync(filePath)) {
-    orders = JSON.parse(fs.readFileSync(filePath, "utf8"));
-  }
-
-  res.json(orders);
+aapp.get("/orders", (req, res) => {
+  res.status(403).json({ message: "Orders are private" });
 });
 app.post("/save-order", async (req, res) => {
   try {
