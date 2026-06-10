@@ -149,7 +149,21 @@ Beauty Preserved Through Time.
     res.status(500).json({ success: false, error: error.message });
   }
 });
+app.get("/test-email", async (req, res) => {
+  try {
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: process.env.EMAIL_USER,
+      subject: "MRUDU Test Email",
+      text: "Email is working now.",
+    });
 
+    res.json({ success: true, message: "Test email sent" });
+  } catch (error) {
+    console.error("Test Email Error:", error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
 const PORT = process.env.PORT || 5001;
 
 app.listen(PORT, () => {
