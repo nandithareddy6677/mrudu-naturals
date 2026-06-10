@@ -485,6 +485,7 @@ function SearchDrawer({ isOpen, closeSearch, searchTerm, setSearchTerm }) {
 
   function HomePage({
     cart,
+    setCart,
     addToCart,
     cartOpen,
     setCartOpen,
@@ -707,6 +708,7 @@ function SearchDrawer({ isOpen, closeSearch, searchTerm, setSearchTerm }) {
 
   function DawnPage({
     cart,
+    setCart,
     addToCart,
     cartOpen,
     setCartOpen,
@@ -821,6 +823,7 @@ function SearchDrawer({ isOpen, closeSearch, searchTerm, setSearchTerm }) {
   }
   function ReflectionPage({
   cart,
+  setCart,
   addToCart,
   cartOpen,
   setCartOpen,
@@ -952,36 +955,35 @@ function SearchDrawer({ isOpen, closeSearch, searchTerm, setSearchTerm }) {
       <div className="success-card">
         <h1>✓ Order Confirmed</h1>
 
-<p>
-Thank you for shopping with MRUDU.
-</p>
+        <p>Thank you for shopping with MRUDU.</p>
 
-<p>
-Your ritual has been lovingly prepared and your order has been received successfully.
-</p>
+        <p>
+          Your ritual has been received successfully.
+        </p>
 
-<p>
-We will begin processing your order shortly and share tracking details once dispatched.
-</p>
+        <p>
+          We will begin processing your order shortly and share tracking details once dispatched.
+        </p>
 
-<p className="order-id">
-Order ID: MRD{Date.now()}
-</p>
+        <p className="order-id">
+          Beauty Preserved Through Time
+        </p>
 
         <Link to="/">
           <button className="checkout-btn">
             Continue Shopping
-            <a
-  href="https://wa.me/919908895612?text=Hi%20MRUDU,%20I%20have%20placed%20an%20order."
-  target="_blank"
-  rel="noreferrer"
->
-  <button className="checkout-btn">
-    Message MRUDU on WhatsApp
-  </button>
-</a>
           </button>
         </Link>
+
+        <a
+          href="https://wa.me/919908895612?text=Hi%20MRUDU,%20I%20have%20placed%20an%20order."
+          target="_blank"
+          rel="noreferrer"
+        >
+          <button className="checkout-btn">
+            Message MRUDU on WhatsApp
+          </button>
+        </a>
       </div>
     </div>
   );
@@ -1259,8 +1261,9 @@ function ContactPage() {
           path="/"
           element={
             <HomePage
-              cart={cart}
-              addToCart={addToCart}
+  cart={cart}
+  setCart={setCart}
+  addToCart={addToCart}
               cartOpen={cartOpen}
               setCartOpen={setCartOpen}
               increaseQty={increaseQty}
@@ -1281,8 +1284,8 @@ function ContactPage() {
           path="/dawn"
           element={
             <DawnPage
-              cart={cart}
-              addToCart={addToCart}
+  cart={cart}
+  addToCart={addToCart}
               cartOpen={cartOpen}
               setCartOpen={setCartOpen}
               increaseQty={increaseQty}
@@ -1302,8 +1305,9 @@ function ContactPage() {
           path="/reflection"
           element={
             <ReflectionPage
-              cart={cart}
-              addToCart={addToCart}
+  cart={cart}
+  setCart={setCart}
+  addToCart={addToCart}
               cartOpen={cartOpen}
               setCartOpen={setCartOpen}
               increaseQty={increaseQty}

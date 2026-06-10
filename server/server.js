@@ -43,27 +43,6 @@ app.get("/orders", (req, res) => {
 
   res.json(orders);
 });
-
-app.post("/create-order", async (req, res) => {
-  try {
-    const { amount } = req.body;
-
-    const order = await razorpay.orders.create({
-      amount: amount * 100,
-      currency: "INR",
-      receipt: "mrudu_order_" + Date.now(),
-    });
-
-    res.json({
-      ...order,
-      key: process.env.RAZORPAY_KEY_ID,
-    });
-  } catch (error) {
-    console.error("Create Order Error:", error);
-    res.status(500).json({ success: false });
-  }
-});
-
 app.post("/save-order", async (req, res) => {
   try {
     const filePath = path.resolve(__dirname, "orders.json");
@@ -75,7 +54,9 @@ app.post("/save-order", async (req, res) => {
 
     const newOrder = {
       id: "MRD" + Date.now(),
-      date: new Date().toLocaleString(),
+      date: new Date().toLocaleString("en-IN", {
+        timeZone: "Asia/Kolkata",
+      }),
       ...req.body,
     };
 
@@ -85,8 +66,7 @@ app.post("/save-order", async (req, res) => {
     const productsList =
       newOrder.cart?.map((item) => `${item.name} × ${item.qty}`).join("\n") || "-";
 
-    // Email to MRUDU
-    await transporter.sendMail({
+    const ownerEmail = transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: process.env.EMAIL_USER,
       subject: `New MRUDU Order - ${newOrder.id}`,
@@ -97,29 +77,29 @@ Order ID: ${newOrder.id}
 Date: ${newOrder.date}
 
 Customer:
-Name: ${newOrder.customer?.name}
-Phone: ${newOrder.customer?.phone}
-Email: ${newOrder.customer?.email}
-Address: ${newOrder.customer?.address}
-City: ${newOrder.customer?.city}
-State: ${newOrder.customer?.state}
-Pincode: ${newOrder.customer?.pincode}
+Name: ${newOrder.customer?.name || "-"}
+Phone: ${newOrder.customer?.phone || "-"}
+Email: ${newOrder.customer?.email || "-"}
+Address: ${newOrder.customer?.address || "-"}
+City: ${newOrder.customer?.city || "-"}
+State: ${newOrder.customer?.state || "-"}
+Pincode: ${newOrder.customer?.pincode || "-"}
 
 Products:
 ${productsList}
 
 Total: ₹${newOrder.total}
-Payment ID: ${newOrder.paymentId}
+Payment ID: ${newOrder.paymentId || "-"}
+Razorpay Order ID: ${newOrder.razorpayOrderId || "-"}
       `,
     });
 
-    // Email to customer
-    await transporter.sendMail({
+    const customerEmail = transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: newOrder.customer?.email,
       subject: `Thank you for shopping with MRUDU - ${newOrder.id}`,
       text: `
-Dear ${newOrder.customer?.name},
+Dear ${newOrder.customer?.name || "Customer"},
 
 Thank you for shopping with MRUDU.
 
@@ -136,8 +116,16 @@ We will begin processing your order shortly and share tracking details once disp
 
 With love,
 MRUDU
-Beauty preserved through time.
+Beauty Preserved Through Time.
       `,
+    });
+
+    Promise.allSettled([ownerEmail, customerEmail]).then((results) => {
+      results.forEach((result, index) => {
+        if (result.status === "rejected") {
+          console.error(index === 0 ? "Owner Email Error:" : "Customer Email Error:", result.reason);
+        }
+      });
     });
 
     res.json({ success: true, orderId: newOrder.id });
