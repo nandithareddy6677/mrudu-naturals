@@ -70,7 +70,7 @@ const reflectionProducts = [
     name: "KSHEERA PUSHPA",
     subtitle: "Skin Milk",
     old: 1450,
-    offer: 1160,
+    offer: 1,
     size: "50ml",
   },
 ];
