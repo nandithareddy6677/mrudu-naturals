@@ -43,7 +43,7 @@ const reflectionProducts = [
     name: "MUKHASUDHHI",
     subtitle: "Face Cleansing Powder",
     old: 899,
-    offer: 1,
+    offer: 719,
     size: "150",
   },
 
@@ -88,7 +88,7 @@ function FloatingButtons() {
       </a>
 
       <a
-        href="https://instagram.com/mrudu.in"
+       href="https://instagram.com/themrudu"
         target="_blank"
         rel="noreferrer"
         className="floating-btn instagram-btn"
@@ -193,7 +193,7 @@ function Header({ cartCount, openCart, openSearch, openWishlist, wishlistCount }
   );
 }
 
-function CartDrawer({ cart, isOpen, closeCart, increaseQty, decreaseQty }) {
+function CartDrawer({ cart, setCart, isOpen, closeCart, increaseQty, decreaseQty }) {
   const total = cart.reduce(
     (sum, item) => sum + item.offer * (item.qty || 1),
     0
@@ -251,7 +251,7 @@ function CartDrawer({ cart, isOpen, closeCart, increaseQty, decreaseQty }) {
 });
 
 setCart([]);
-
+closeCart();
 window.location.href = "/success";
       },
 
@@ -679,8 +679,9 @@ function SearchDrawer({ isOpen, closeSearch, searchTerm, setSearchTerm }) {
         <FloatingButtons />
 
         <CartDrawer
-          cart={cart}
-          isOpen={cartOpen}
+  cart={cart}
+  setCart={setCart}
+  isOpen={cartOpen}
           closeCart={() => setCartOpen(false)}
           increaseQty={increaseQty}
           decreaseQty={decreaseQty}
@@ -793,8 +794,9 @@ function SearchDrawer({ isOpen, closeSearch, searchTerm, setSearchTerm }) {
         <Footer />
 
         <CartDrawer
-          cart={cart}
-          isOpen={cartOpen}
+  cart={cart}
+  setCart={setCart}
+  isOpen={cartOpen}
           closeCart={() => setCartOpen(false)}
           increaseQty={increaseQty}
           decreaseQty={decreaseQty}
@@ -932,9 +934,10 @@ function SearchDrawer({ isOpen, closeSearch, searchTerm, setSearchTerm }) {
 
         <Footer />
 
-        <CartDrawer
-          cart={cart}
-          isOpen={cartOpen}
+                  <CartDrawer
+  cart={cart}
+  setCart={setCart}
+  isOpen={cartOpen}
           closeCart={() => setCartOpen(false)}
           increaseQty={increaseQty}
           decreaseQty={decreaseQty}
@@ -968,6 +971,15 @@ Order ID: MRD{Date.now()}
         <Link to="/">
           <button className="checkout-btn">
             Continue Shopping
+            <a
+  href="https://wa.me/919908895612?text=Hi%20MRUDU,%20I%20have%20placed%20an%20order."
+  target="_blank"
+  rel="noreferrer"
+>
+  <button className="checkout-btn">
+    Message MRUDU on WhatsApp
+  </button>
+</a>
           </button>
         </Link>
       </div>
@@ -1109,7 +1121,7 @@ function ContactPage() {
       <div className="contact-box">
         <p><strong>Email:</strong> hellomrudu.in@gmail.com</p>
         <p><strong>Phone:</strong> 9908895612</p>
-        <p><strong>Instagram:</strong> @mrudu.in</p>
+       <p><strong>Instagram:</strong> @themrudu</p>
         <p><strong>Business Hours:</strong> Monday - Saturday, 10 AM - 6 PM</p>
       </div>
 
