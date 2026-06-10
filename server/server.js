@@ -36,6 +36,25 @@ app.get("/", (req, res) => {
 app.get("/orders", (req, res) => {
   res.status(403).json({ message: "Orders are private" });
 });
+app.post("/create-order", async (req, res) => {
+  try {
+    const { amount } = req.body;
+
+    const order = await razorpay.orders.create({
+      amount: amount * 100,
+      currency: "INR",
+      receipt: "mrudu_order_" + Date.now(),
+    });
+
+    res.json({
+      ...order,
+      key: process.env.RAZORPAY_KEY_ID,
+    });
+  } catch (error) {
+    console.error("Create Order Error:", error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
 app.post("/save-order", async (req, res) => {
   try {
     const filePath = path.resolve(__dirname, "orders.json");
