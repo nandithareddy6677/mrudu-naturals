@@ -250,7 +250,7 @@ function CartDrawer({ cart, setCart, isOpen, closeCart, increaseQty, decreaseQty
   }),
 });
 
-setCart([]);
+
 closeCart();
 window.location.href = "/success";
       },
