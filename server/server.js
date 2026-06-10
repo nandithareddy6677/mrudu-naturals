@@ -8,7 +8,15 @@ require("dotenv").config();
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: [
+    "https://mrudu.in",
+    "https://www.mrudu.in",
+    "http://localhost:5173"
+  ],
+  methods: ["GET", "POST"],
+  allowedHeaders: ["Content-Type"]
+}));
 app.use(express.json());
 
 const razorpay = new Razorpay({
