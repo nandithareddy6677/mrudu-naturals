@@ -33,7 +33,7 @@ app.get("/", (req, res) => {
   res.send("MRUDU SERVER RUNNING");
 });
 
-aapp.get("/orders", (req, res) => {
+app.get("/orders", (req, res) => {
   res.status(403).json({ message: "Orders are private" });
 });
 app.post("/save-order", async (req, res) => {
