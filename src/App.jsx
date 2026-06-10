@@ -210,7 +210,7 @@ function CartDrawer({ cart, setCart, isOpen, closeCart, increaseQty, decreaseQty
 
   const handlePayment = async (amount) => {
     try {
-      const res = await fetch("https://mrudu-backend.onrender.com/create-order", {
+      const res = await fetch("https://mrudu-naturals-production.up.railway.app/create-order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ amount }),
@@ -232,7 +232,7 @@ function CartDrawer({ cart, setCart, isOpen, closeCart, increaseQty, decreaseQty
         order_id: order.id,
 
         handler: async function (response) {
-          const saveRes = await fetch("https://mrudu-backend.onrender.com/save-order", {
+          const saveRes = await fetch("https://mrudu-naturals-production.up.railway.app/save-order", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
