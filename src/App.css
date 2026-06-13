@@ -1769,3 +1769,14 @@ button {
 .success-card button {
   text-decoration: none;
 }
+.success-card a,
+.success-card a:visited,
+.success-card a:hover,
+.success-card a:active {
+  text-decoration: none;
+  color: inherit;
+}
+
+.success-card a button {
+  text-decoration: none;
+}
