@@ -119,7 +119,7 @@ Razorpay Order ID: ${newOrder.razorpayOrderId || "-"}
       }),
 
       transporter.sendMail({
-        from: process.env.EMAIL_USER,
+        from:`"MRUDU" <${process.env.EMAIL_USER}>`,
         to: newOrder.customer?.email,
         subject: `Thank you for shopping with MRUDU - ${newOrder.id}`,
         text: `
@@ -160,7 +160,7 @@ Beauty Preserved Through Time.
 app.get("/test-email", async (req, res) => {
   try {
     await transporter.sendMail({
-      from: process.env.EMAIL_USER,
+      from: `"MRUDU" <${process.env.EMAIL_USER}>`,
       to: process.env.EMAIL_USER,
       subject: "MRUDU Test Email",
       text: "Email is working now.",
