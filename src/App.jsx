@@ -1,106 +1,187 @@
 import { useState, useEffect } from "react";
-import { Routes, Route, Link, useNavigate } from "react-router-dom";
+import { Routes, Route, Link, useNavigate, useParams } from "react-router-dom";
 import { FaWhatsapp, FaInstagram } from "react-icons/fa";
 import "./App.css";
 
-import logo from "./assets/logo.png";
-import heroWorld from "./assets/hero-world.png";
-import heroDawn from "./assets/hero-dawn.png";
-import heroReflection from "./assets/hero-reflection.png";
-import heroBloom from "./assets/hero-bloom.png";
+import logo from "./assets/logo.jpeg";
+import heroBanner from "./assets/mrudu-hero-banner.png";
 
-import dawnCard from "./assets/dawn-card.png";
+import bodyCard from "./assets/body-card.png";
+import faceCard from "./assets/face-card.png";
+import hairCard from "./assets/hair-card.png";
 
-import bloomCard from "./assets/bloom-card.png";
+import bodyRitualHero from "./assets/body-ritual-collection.png";
+import faceRitualHero from "./assets/face-ritual-collection.png";
+import hairRitualHero from "./assets/hair-ritual-collection.png";
 
-import theDawnProduct from "./assets/product-thedawn.png";
-import bodyRitualHero from "./assets/body-ritual-hero.png";
+import goldenUbtan from "./assets/golden-ubtan.png";
+import mangoBodyButter from "./assets/mango-body-butter.jpeg";
+import cloudMeltCream from "./assets/cloud-melt-cream.jpeg";
+
+import shataDautaGhrita from "./assets/shata-dauta-ghrita.png";
+import blackRiceCleansingPowder from "./assets/black-rice-cleansing-powder.jpeg";
+
+import rosemaryHairElixir from "./assets/rosemary-hair-elixir.jpeg";
+import hairWashPowder from "./assets/hair-wash-powder.png";
+
 import ourStoryImage from "./assets/our-story.png";
+import avarampooImg from "./assets/Avarampoo img.jpeg";
+import licoriceImg from "./assets/licorice img.jpeg";
+import vetiverImg from "./assets/vetiver img.jpeg";
+import blackRiceImg from "./assets/blackrice img.jpeg";
 
-import suvarnaProduct from "./assets/suvarna-snana.png";
-import komalaProduct from "./assets/komala-tailam.png";
-import sugandhaProduct from "./assets/sugandha-snana.png";
-import mridulaProduct from "./assets/mridula-sparsha.png";
-import faceRitualHero from "./assets/face-ritual-hero.jpg";
-import reflectionCard from "./assets/reflection-card.png";
-import productReflection from "./assets/product-thereflection.png";
-import mukhasudhhiProduct from "./assets/mukhasudhhi.jpeg";
-import shataDhautaProduct from "./assets/shata-dhauta-grita.jpeg";
-import ksheeraPushpaProduct from "./assets/ksheera-pushpa.jpeg";
-import snidhaProduct from "./assets/snidha.jpeg";
+import mangoImg from "./assets/mango img.jpeg";
+import sheaImg from "./assets/shea nuts img.jpeg";
+import cocoaImg from "./assets/cocoa beans img.jpeg";
+import almondImg from "./assets/almonds img.jpeg";
+import aloeImg from "./assets/aloevera img.jpeg";
+import oatsImg from "./assets/oats img.jpeg";
+import chamomileImg from "./assets/chamomile img.jpeg";
+import calendulaImg from "./assets/calendula img.jpeg";
+
+import whiteLotusImg from "./assets/white lotus img.jpeg";
+import blueLotusImg from "./assets/blue lotus img.jpeg";
+import saffronImg from "./assets/saffron img.jpeg";
+import roseImg from "./assets/roseflower img.jpeg";
+
+import rosemaryImg from "./assets/rosemary img.jpeg";
+import bhringrajImg from "./assets/bhringraj img.jpeg";
+import amlaImg from "./assets/amla img.jpeg";
+import brahmiImg from "./assets/brahmi img.jpeg";
+
+import shikakaiImg from "./assets/shikakai img.jpeg";
+import soapnutImg from "./assets/soapnut img.jpeg";
+import hibiscusImg from "./assets/hibiscus img.jpeg";
 
 
 
 const products = [
-  { image: suvarnaProduct, name: "SUVARNA SNANA", subtitle: "Golden Bath Ritual", old: 949, offer: 759, size: "250g" },
-  { image: komalaProduct, name: "KOMALA TAILAM", subtitle: "Sacred Body Oil", old: 1099, offer: 879, size: "220ml" },
-  { image: sugandhaProduct, name: "SUGANDHA SNANA", subtitle: "Ritual Bathing Bar", old: 599, offer: 479, size: "125g" },
-  { image: mridulaProduct, name: "MRIDULA SPARSHA", subtitle: "Velvet Body Butter", old: 1099, offer: 879, size: "220g" },
-];
-const reflectionProducts = [
   {
-    image: mukhasudhhiProduct,
-    name: "MUKHASUDHHI",
+    slug: "golden-ubtan",
+    image: goldenUbtan,
+    name: "GOLDEN UBTAN",
+    subtitle: "Body Cleansing Ritual",
+    old: 899,
+    offer: 719,
+    size: "250g",
+  },
+  {
+    slug: "mango-body-butter",
+    image: mangoBodyButter,
+    name: "MANGO BODY BUTTER",
+    subtitle: "Rich Body Moisturiser",
+    old: 1099,
+    offer: 879,
+    size: "200g",
+  },
+  {
+    slug: "cloud-melt-cream",
+    image: cloudMeltCream,
+    name: "CLOUD MELT CREAM",
+    subtitle: "Soft Body Cream",
+    old: 999,
+    offer: 799,
+    size: "200g",
+  },
+];
+
+const faceProducts = [
+  {
+    slug: "shata-dhauta-ghrita",
+    image: shataDautaGhrita,
+    name: "SHATA DAUTA GHRITA",
+    subtitle: "Night Repair Cream",
+    old: 1199,
+    offer: 959,
+    size: "100g",
+  },
+  {
+   slug: "black-rice-cleansing-powder",
+    image: blackRiceCleansingPowder,
+    name: "BLACK RICE CLEANSING POWDER",
     subtitle: "Face Cleansing Powder",
     old: 899,
     offer: 719,
-    size: "150",
+    size: "100g",
+  },
+];
+
+const hairProducts = [
+  {
+    slug: "rosemary-hair-elixir",
+    image: rosemaryHairElixir,
+    name: "ROSEMARY HAIR ELIXIR",
+    subtitle: "Scalp & Hair Oil",
+    old: 999,
+    offer: 799,
+    size: "100ml",
+  },
+  {
+    slug: "hair-wash-powder",
+    image: hairWashPowder,
+    name: "HAIR WASH POWDER",
+    subtitle: "Herbal Hair Cleanser",
+    old: 899,
+    offer: 719,
+    size: "250g",
+  },
+];
+const featuredProducts = [
+  {
+    image: mangoBodyButter,
+    name: "MANGO BODY BUTTER",
+    subtitle: "Rich Body Moisturiser",
+    old: 1099,
+    offer: 879,
+    size: "200g",
   },
 
   {
-    image: shataDhautaProduct,
+    image: cloudMeltCream,
+    name: "CLOUD MELT CREAM",
+    subtitle: "Soft Body Cream",
+    old: 999,
+    offer: 799,
+    size: "200g",
+  },
+
+  {
+    image: shataDautaGhrita,
     name: "SHATA DHAUTA GHRITA",
-    subtitle: "Night Cream",
+    subtitle: "Night Repair Cream",
     old: 1199,
     offer: 959,
     size: "100g",
   },
 
   {
-    image: snidhaProduct,
-    name: "SNIDHA",
-    subtitle: "Daily Moisturizer",
-    old: 1190,
-    offer: 952,
-    size: "50ml",
+    image: blackRiceCleansingPowder,
+    name: "BLACK RICE CLEANSING GRAINS",
+    subtitle: "Face Cleansing Powder",
+    old: 899,
+    offer: 719,
+    size: "100g",
   },
 
   {
-    image: ksheeraPushpaProduct,
-    name: "KSHEERA PUSHPA",
-    subtitle: "Skin Milk",
-    old: 1450,
-    offer: 1160,
-    size: "50ml",
+    image: rosemaryHairElixir,
+    name: "ROSEMARY HAIR ELIXIR",
+    subtitle: "Scalp & Hair Oil",
+    old: 999,
+    offer: 799,
+    size: "100ml",
+  },
+
+  {
+    image: hairWashPowder,
+    name: "HAIR WASH POWDER",
+    subtitle: "Herbal Hair Cleanser",
+    old: 899,
+    offer: 719,
+    size: "250g",
   },
 ];
-function FloatingButtons() {
-  return (
-    <div className="floating-socials">
-      <a
-        href="https://wa.me/919908895612"
-        target="_blank"
-        rel="noreferrer"
-        className="floating-btn whatsapp-btn"
-        aria-label="Chat on WhatsApp"
-      >
-        <FaWhatsapp />
-      </a>
 
-      <a
-       href="https://instagram.com/themrudu"
-        target="_blank"
-        rel="noreferrer"
-        className="floating-btn instagram-btn"
-        aria-label="Visit Instagram"
-      >
-        <FaInstagram />
-        
-      </a>
-      
-    </div>
-  );
-}
 
 function Header({ cartCount, openCart, openSearch, openWishlist, wishlistCount }) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -146,30 +227,30 @@ function Header({ cartCount, openCart, openSearch, openWishlist, wishlistCount }
         </div>
 
         <nav className={menuOpen ? "nav-open" : ""}>
-          <Link to="/" onClick={() => setMenuOpen(false)}>
-            Home
-          </Link>
+  <Link to="/" onClick={() => setMenuOpen(false)}>
+    Home
+  </Link>
 
-          <a href="/#chapters" onClick={() => setMenuOpen(false)}>
-            Collections
-          </a>
+  <Link to="/body" onClick={() => setMenuOpen(false)}>
+    Body Rituals
+  </Link>
 
-          <Link to="/dawn" onClick={() => setMenuOpen(false)}>
-            Body Rituals
-          </Link>
+  <Link to="/hair" onClick={() => setMenuOpen(false)}>
+    Hair Rituals
+  </Link>
 
-          <Link to="/reflection" onClick={() => setMenuOpen(false)}>
-            Face Rituals
-          </Link>
+  <Link to="/face" onClick={() => setMenuOpen(false)}>
+    Face Rituals
+  </Link>
 
-          <a href="/#story" onClick={() => setMenuOpen(false)}>
-            Our Story
-          </a>
+  <a href="/#story" onClick={() => setMenuOpen(false)}>
+    Our Story
+  </a>
 
-          <Link to="/contact" onClick={() => setMenuOpen(false)}>
-            Contact
-          </Link>
-        </nav>
+  <Link to="/contact" onClick={() => setMenuOpen(false)}>
+    Contact
+  </Link>
+</nav>
 
         <div className="nav-icons desktop-icons">
           <button className="icon-btn" onClick={openSearch}>
@@ -335,13 +416,18 @@ function CartDrawer({ cart, setCart, isOpen, closeCart, increaseQty, decreaseQty
   );
 }
 function SearchDrawer({ isOpen, closeSearch, searchTerm, setSearchTerm }) {
-  const allProducts = [...products, ...reflectionProducts];
+  const allProducts = [...products, ...faceProducts, ...hairProducts];
 
-  const filteredProducts = allProducts.filter(
-    (product) =>
-      product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      product.subtitle.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredProducts = allProducts.filter((product) => {
+  const name = product?.name || "";
+  const subtitle = product?.subtitle || "";
+  const term = searchTerm || "";
+
+  return (
+    name.toLowerCase().includes(term.toLowerCase()) ||
+    subtitle.toLowerCase().includes(term.toLowerCase())
   );
+});
 
   if (!isOpen) return null;
 
@@ -372,7 +458,7 @@ function SearchDrawer({ isOpen, closeSearch, searchTerm, setSearchTerm }) {
       {searchTerm.trim() !== "" &&
         filteredProducts.map((item) => (
           <Link
-            to={products.find((p) => p.name === item.name) ? "/dawn#products" : "/reflection#reflection-products"}
+            to={products.find((p) => p.name === item.name) ? "/body#products" : "/face#face-products"}
             className="search-result"
             key={item.name}
             onClick={closeSearch}
@@ -415,6 +501,29 @@ function SearchDrawer({ isOpen, closeSearch, searchTerm, setSearchTerm }) {
       </div>
     );
   }
+  
+  function RitualTicker() {
+  return (
+    <div className="ritual-ticker">
+      <div className="ritual-track">
+        <span>Crafted With Care</span>
+        <span>✦</span>
+        <span>Rooted In Heritage</span>
+        <span>✦</span>
+        <span>Pure Ingredients</span>
+        <span>✦</span>
+        <span>Time-Honoured Rituals</span>
+        <span>✦</span>
+        <span>Beauty Preserved Through Time</span>
+        <span>✦</span>
+        <span>Crafted With Care</span>
+        <span>✦</span>
+        <span>Rooted In Heritage</span>
+      </div>
+    </div>
+  );
+}
+
 
   function HomePage({
     cart,
@@ -436,17 +545,19 @@ function SearchDrawer({ isOpen, closeSearch, searchTerm, setSearchTerm }) {
     const navigate = useNavigate();
 
     const heroSlides = [
-      { image: heroWorld, button: "EXPLORE MRUDU", action: "chapters" },
-      { image: heroDawn, button: "EXPLORE THE DAWN", action: "/dawn" },
-      { image: heroReflection, button: "EXPLORE THE REFLECTION", action: "chapters", className: "reflection-slide" },
-      { image: heroBloom, button: "EXPLORE THE BLOOM", action: "chapters" },
-    ];
+  {
+    image: heroBanner,
+    button: "EXPLORE COLLECTION",
+    action: "chapters",
+    className: "mrudu-main-slide",
+  },
+];
     useEffect(() => {
   heroSlides.forEach((slide) => {
     const img = new Image();
     img.src = slide.image;
   });
-}, []);
+}, [heroSlides]);
 
     const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -469,127 +580,134 @@ function SearchDrawer({ isOpen, closeSearch, searchTerm, setSearchTerm }) {
           wishlistCount={wishlist.length}
         />
 
-        <section className="hero-wrap" id="home">
-          <button className="arrow left" onClick={prevSlide}>‹</button>
+ <section className="hero-wrap" id="home">
+  <div className="hero-frame">
+    <img
+      src={heroSlides[currentSlide].image}
+      alt="MRUDU Hero"
+      className="hero-image"
+    />
+  </div>
+</section>
 
-          <div className="hero-frame">
-            <img
-              src={heroSlides[currentSlide].image}
-              alt="MRUDU Hero"
-              className={`hero-image ${heroSlides[currentSlide].className || ""}`}
-            />
+<div className="ritual-ticker">
+  <div className="ritual-track">
+    <span>Crafted With Care</span>
+    <span>✦</span>
+    <span>Rooted In Heritage</span>
+    <span>✦</span>
+    <span>Pure Ingredients</span>
+    <span>✦</span>
+    <span>Time-Honoured Rituals</span>
+    <span>✦</span>
+    <span>Beauty Preserved Through Time</span>
+    <span>✦</span>
+    <span>Crafted With Care</span>
+    <span>✦</span>
+    <span>Rooted In Heritage</span>
+  </div>
+</div>
 
-            <button
-              className={`hero-explore-btn ${heroSlides[currentSlide].className === "reflection-slide" ? "reflection-btn" : ""
-                }`}
-              onClick={heroClick}
-            >
-              {heroSlides[currentSlide].button}
-            </button>
-          </div>
+<section className="brand-strip">
+  <h2>Rooted in Tradition. Made for Today.</h2>
 
-          <button className="arrow right" onClick={nextSlide}>›</button>
-        </section>
+  <div className="brand-points">
+  <div><span>🌿</span>Ancient Indian<br />Botanicals</div>
+  <div><span>🪔</span>Slow Crafted<br />Rituals</div>
+  <div><span>✧</span>Pure & Honest<br />Ingredients</div>
+  <div><span>❀</span>For Skin, Hair<br />& Body</div>
+</div>
+</section>
 
         <section className="chapters" id="chapters">
-          <h2>THE CHAPTERS</h2>
-          <p>Enter the world of MRUDU</p>
+       <h2>THE COLLECTIONS</h2>
+<p>Rooted in tradition. Made for today.</p>
 
           <div className="chapter-grid">
             <div className="chapter-card">
-              <img src={dawnCard} alt="The Dawn" />
+              <img src={bodyCard} alt="The Dawn" />
               <div className="chapter-content">
-                <h3>THE DAWN</h3>
-                <p>Body Ritual Collection</p>
+                <h3>BODY RITUALS</h3>
+<p>Bath • Oil • Body Care</p>
                 <button
                   onClick={() =>
-                    window.open("/dawn", "_blank")
+                    window.open("/body", "_blank")
                   }
                 >
-                  EXPLORE →
+                  SHOP BODY →
                 </button>
               </div>
             </div>
 
             <div className="chapter-card">
-              <img src={reflectionCard} alt="The Reflection" />
+              <img src={faceCard} alt="The Reflection" />
               <div className="chapter-content">
-                <h3>THE REFLECTION</h3>
-
-                <p>Ancient Face Ritual Collection</p>
+                <h3>FACE RITUALS</h3>
+<p>Cleanse • Nourish • Glow</p>
                 <button
                   onClick={() =>
-                    window.open("/reflection", "_blank")
+                    window.open("/face", "_blank")
                   }
                 >
-                  EXPLORE  →
+                  SHOP FACE  →
                 </button>
               </div>
             </div>
 
             <div className="chapter-card">
-              <img src={bloomCard} alt="The Bloom" />
+             <img src={hairCard} alt="Hair Rituals" />
               <div className="chapter-content">
-                <h3>THE BLOOM</h3>
-                <p>Hair Ritual Collection</p>
-                <button
-  className="coming-soon-btn"
-  disabled
->
-  COMING SOON
+                <h3>HAIR RITUALS</h3>
+<p>Strengthen • Nourish • Revive</p>
+                <button onClick={() => window.open("/hair", "_blank")}>
+  SHOP HAIR →
 </button>
               </div>
             </div>
           </div>
         </section>
 
-        <section className="home-product-section">
-          <img src={theDawnProduct} alt="The Dawn Collection" />
+       <section className="featured-section">
+  <p className="small-title">MRUDU COLLECTION</p>
 
-          <div>
-            <p className="small-title">THE DAWN COLLECTION</p>
-            <h2>BODY RITUALS</h2>
-            <h4>Four Timeless Rituals</h4>
-            <p>
-              A complete body ritual collection crafted with Suvarna Snana,
-              Komala Tailam, Sugandha Snana and Mridula Sparsha.
-            </p>
+  <h2>FEATURED PRODUCTS</h2>
 
-            <button onClick={() => navigate("/dawn#products")}>
-              Explore The Dawn
-            </button>
-          </div>
-        </section>
-        <section className="home-product-section">
+  <p className="featured-subtitle">
+    Discover our most loved rituals across body, face and hair.
+  </p>
 
-          <img
-            src={productReflection}
-            alt="The Reflection"
-          />
+  <div className="featured-grid">
+    {featuredProducts.map((product, index) => (
+      <div className="product-card" key={index}>
+        <button
+          className="wishlist-btn"
+          onClick={() => toggleWishlist(product)}
+        >
+          {wishlist.find((item) => item.name === product.name)
+            ? "♥"
+            : "♡"}
+        </button>
 
-          <div className="home-product-content">
+        <img src={product.image} alt={product.name} />
 
-            <p>THE REFLECTION COLLECTION</p>
+        <h3>{product.name}</h3>
 
-            <h2>FACE RITUALS</h2>
+        <p>{product.subtitle}</p>
 
-            <h4>Four Timeless Rituals</h4>
+        <span>{product.size}</span>
 
-            <p>
-              A complete face ritual collection crafted with
-              Mukhasuddhi, Shata Dhauta Ghrita,
-              Snidha and Ksheera Pushpa.
-            </p>
+        <div className="price-row">
+          <del>₹{product.old}</del>
+          <strong>₹{product.offer}</strong>
+        </div>
 
-            <button
-              onClick={() => navigate("/reflection")}
-            >
-              EXPLORE THE REFLECTION
-            </button>
-
-          </div>
-
-        </section>
+        <button onClick={() => addToCart(product)}>
+          Add To Cart
+        </button>
+      </div>
+    ))}
+  </div>
+</section> 
 
         <section className="story-section" id="story">
           <img src={ourStoryImage} alt="Our Story" />
@@ -597,20 +715,53 @@ function SearchDrawer({ isOpen, closeSearch, searchTerm, setSearchTerm }) {
           <div>
             <p className="small-title">OUR STORY</p>
             <h2>MRUDU</h2>
-            <p>
-              MRUDU is a house of timeless rituals inspired by ancient feminine grace,
-              traditional beauty practices and the quiet luxury of everyday self-care.
-            </p>
-            <p>
-              Every creation preserves beauty through body, face and hair rituals
-              rooted in tradition and reimagined for today.
-            </p>
+            <p className="story-tagline">
+  Rooted in Tradition • Made for Today
+</p>
+
+<div className="story-divider"></div>
+            
+              <p>
+MRUDU began with a simple belief —
+that beauty does not need complexity.
+For generations, Indian homes preserved
+their own rituals through herbs, flowers,
+oils and time-honoured ingredients.
+</p>
+
+<p>
+We bring those traditions into the present,
+creating thoughtful rituals for skin,
+hair and body using ingredients inspired
+by nature and crafted with care.
+</p>
+
+<p>
+Not trends. Not shortcuts.
+Just beauty preserved through time.
+</p>
+<div className="story-stats">
+  <div>
+    <h3>100%</h3>
+    <p>Nature Inspired</p>
+  </div>
+
+  <div>
+    <h3>3</h3>
+    <p>Ritual Collections</p>
+  </div>
+
+  <div>
+    <h3>∞</h3>
+    <p>Timeless Traditions</p>
+  </div>
+</div>
           </div>
         </section>
         
 
         <Footer />
-        <FloatingButtons />
+      
 
         <CartDrawer
   cart={cart}
@@ -692,46 +843,67 @@ function SearchDrawer({ isOpen, closeSearch, searchTerm, setSearchTerm }) {
               Explore Body Rituals
             </button>
           </div>
+       
+
         </section>
 
-        <section className="products-page" id="products">
-          <p className="small-title">THE DAWN COLLECTION</p>
+<RitualTicker />
+
+<section className="products-page" id="products">
+         <p className="small-title">BODY CARE COLLECTION</p>
           <h2>BODY RITUALS</h2>
 
           <div className="product-grid">
-            {products.map((product, index) => (
-              <div className="product-card" key={index}>
-                <button
-                  className="wishlist-btn"
-                  onClick={() => toggleWishlist(product)}
-                >
-                  {wishlist.find((item) => item.name === product.name) ? "♥" : "♡"}
-                </button>
+  {products.map((product, index) => (
+    <Link
+      to={`/product/${product.slug}`}
+      className="product-card-link"
+      key={index}
+    >
+      <div className="product-card">
 
-                <img src={product.image} alt={product.name} />
-                <h3>{product.name}</h3>
-                <p>{product.subtitle}</p>
-                <span>{product.size}</span>
+        <button
+          className="wishlist-btn"
+          onClick={(e) => {
+            e.preventDefault();
+            toggleWishlist(product);
+          }}
+        >
+          {wishlist.find((item) => item.name === product.name)
+            ? "♥"
+            : "♡"}
+        </button>
 
-                <div className="price-row">
-                  <del>₹{product.old}</del>
-                  <strong>₹{product.offer}</strong>
-                </div>
+        <img src={product.image} alt={product.name} />
 
-                <button onClick={() => addToCart(product)}>Add To Cart</button>
-              </div>
-            ))}
-          </div>
+        <h3>{product.name}</h3>
 
-          <Link to="/" className="back-home">← Back to Home</Link>
+        <p>{product.subtitle}</p>
+
+        <span>{product.size}</span>
+
+        <div className="price-row">
+          <del>₹{product.old}</del>
+          <strong>₹{product.offer}</strong>
+        </div>
+
+      </div>
+    </Link>
+  ))}
+</div>
+                                
+
+          <Link to="/" className="back-home">
+            ← Back to Home
+          </Link>
         </section>
 
         <Footer />
 
         <CartDrawer
-  cart={cart}
-  setCart={setCart}
-  isOpen={cartOpen}
+          cart={cart}
+          setCart={setCart}
+          isOpen={cartOpen}
           closeCart={() => setCartOpen(false)}
           increaseQty={increaseQty}
           decreaseQty={decreaseQty}
@@ -792,7 +964,7 @@ function SearchDrawer({ isOpen, closeSearch, searchTerm, setSearchTerm }) {
             <button
               onClick={() =>
                 document
-                  .getElementById("reflection-products")
+                  .getElementById("face-products")
                   ?.scrollIntoView({
                     behavior: "smooth",
                     block: "start",
@@ -804,69 +976,67 @@ function SearchDrawer({ isOpen, closeSearch, searchTerm, setSearchTerm }) {
           </div>
         </section>
 
-        <section
-          className="products-page"
-          id="reflection-products"
-        >
-          <p className="small-title">
-            THE REFLECTION COLLECTION
-          </p>
+        
 
-          <h2>FACE RITUALS</h2>
+<RitualTicker />
 
-          <div className="product-grid">
+<section className="products-page" id="face-products">
+  <p className="small-title">FACE CARE COLLECTION</p>
 
-            {reflectionProducts.map((product, index) => (
+  <h2>FACE RITUALS</h2>
 
-              <div className="product-card" key={index}>
+  <div className="product-grid">
+    {faceProducts.map((product, index) => (
+      <Link
+        to={`/product/${product.slug}`}
+        className="product-card-link"
+        key={index}
+      >
+        <div className="product-card">
 
-                <button
-                  className="wishlist-btn"
-                  onClick={() => toggleWishlist(product)}
-                >
-                  {wishlist.find(
-                    (item) => item.name === product.name
-                  )
-                    ? "♥"
-                    : "♡"}
-                </button>
+          <button
+            className="wishlist-btn"
+            onClick={(e) => {
+              e.preventDefault();
+              toggleWishlist(product);
+            }}
+          >
+            {wishlist.find(
+              (item) => item.name === product.name
+            )
+              ? "♥"
+              : "♡"}
+          </button>
 
-                <img
-                  src={product.image}
-                  alt={product.name}
-                />
+          <img
+            src={product.image}
+            alt={product.name}
+          />
 
-                <h3>{product.name}</h3>
+          <h3>{product.name}</h3>
 
-                <p>{product.subtitle}</p>
+          <p>{product.subtitle}</p>
 
-                <span>{product.size}</span>
+          <span>{product.size}</span>
 
-                <div className="price-row">
-                  <del>₹{product.old}</del>
-                  <strong>₹{product.offer}</strong>
-                </div>
-
-                <button
-                  onClick={() => addToCart(product)}
-                >
-                  Add To Cart
-                </button>
-
-              </div>
-
-            ))}
-
+          <div className="price-row">
+            <del>₹{product.old}</del>
+            <strong>₹{product.offer}</strong>
           </div>
 
-          <Link
-            to="/"
-            className="back-home"
-          >
-            ← Back to Home
-          </Link>
+        </div>
+      </Link>
+    ))}
+  </div>
 
-        </section>
+  <Link
+    to="/"
+    className="back-home"
+  >
+    ← Back to Home
+  </Link>
+
+</section>
 
         <Footer />
 
@@ -882,6 +1052,150 @@ function SearchDrawer({ isOpen, closeSearch, searchTerm, setSearchTerm }) {
       </div>
     );
   }
+  function HairPage({
+  cart,
+  setCart,
+  addToCart,
+  cartOpen,
+  setCartOpen,
+  increaseQty,
+  decreaseQty,
+  searchOpen,
+  setSearchOpen,
+  wishlistOpen,
+  setWishlistOpen,
+  searchTerm,
+  setSearchTerm,
+  wishlist,
+  toggleWishlist,
+}) {
+  return (
+    <div className="page">
+
+      <Header
+        cartCount={cart.reduce((sum, item) => sum + item.qty, 0)}
+        openCart={() => setCartOpen(true)}
+        openSearch={() => setSearchOpen(true)}
+        openWishlist={() => setWishlistOpen(true)}
+        wishlistCount={wishlist.length}
+      />
+
+      <section className="dawn-banner">
+        <img
+          src={hairRitualHero}
+          alt="Hair Ritual Collection"
+        />
+
+        <div className="dawn-banner-btn">
+          <button
+            onClick={() =>
+              document
+                .getElementById("hair-products")
+                ?.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+                })
+            }
+          >
+            Explore Hair Rituals
+          </button>
+        </div>
+     
+</section>
+
+<RitualTicker />
+
+<section className="products-page" id="hair-products">
+  <p className="small-title">HAIR CARE COLLECTION</p>
+
+  <h2>HAIR RITUALS</h2>
+
+  <p className="collection-description">
+    Traditional hair care rituals created to strengthen roots,
+    nourish strands and restore natural vitality.
+  </p>
+
+  <div className="product-grid">
+    {hairProducts.map((product, index) => (
+      <Link
+        to={`/product/${product.slug}`}
+        className="product-card-link"
+        key={index}
+      >
+        <div className="product-card">
+
+          <button
+            className="wishlist-btn"
+            onClick={(e) => {
+              e.preventDefault();
+              toggleWishlist(product);
+            }}
+          >
+            {wishlist.find(
+              (item) => item.name === product.name
+            )
+              ? "♥"
+              : "♡"}
+          </button>
+
+          <img
+            src={product.image}
+            alt={product.name}
+          />
+
+          <h3>{product.name}</h3>
+
+          <p>{product.subtitle}</p>
+
+          <span>{product.size}</span>
+
+          <div className="price-row">
+            <del>₹{product.old}</del>
+            <strong>₹{product.offer}</strong>
+          </div>
+
+        </div>
+      </Link>
+    ))}
+  </div>
+
+  <Link
+    to="/"
+    className="back-home"
+  >
+    ← Back to Home
+  </Link>
+
+</section>
+
+      <Footer />
+
+      <CartDrawer
+        cart={cart}
+        setCart={setCart}
+        isOpen={cartOpen}
+        closeCart={() => setCartOpen(false)}
+        increaseQty={increaseQty}
+        decreaseQty={decreaseQty}
+      />
+
+      <SearchDrawer
+        isOpen={searchOpen}
+        closeSearch={() => setSearchOpen(false)}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+      />
+
+      <WishlistDrawer
+        wishlist={wishlist}
+        isOpen={wishlistOpen}
+        closeWishlist={() => setWishlistOpen(false)}
+        addToCart={addToCart}
+      />
+
+    </div>
+  );
+}
   function SuccessPage() {
   const params = new URLSearchParams(window.location.search);
   const orderId = params.get("orderId");
@@ -1081,21 +1395,23 @@ function ContactPage() {
         <div className="footer-grid footer-clean">
 
           <div>
-            <h4>BODY RITUALS</h4>
-            <p>Suvarna Snana</p>
-            <p>Komala Tailam</p>
-            <p>Sugandha Snana</p>
-            <p>Mridula Sparsha</p>
-          </div>
+  <h4>BODY RITUALS</h4>
+  <p>Golden Ubtan</p>
+  <p>Mango Body Butter</p>
+  <p>Cloud Melt Cream</p>
+</div>
 
-          <div>
-            <h4>FACE RITUALS</h4>
-            <p>Mukhasuddhi</p>
-            <p>Shata Dhauta Ghrita</p>
-            <p>Snidha</p>
-            <p>Ksheera Pushpa</p>
-          </div>
+<div>
+  <h4>FACE RITUALS</h4>
+  <p>Shata Dhauta Ghrita</p>
+  <p>Black Rice Cleansing Powder</p>
+</div>
 
+<div>
+  <h4>HAIR RITUALS</h4>
+  <p>Rosemary Hair Elixir</p>
+  <p>Hair Wash Powder</p>
+</div>
           <div>
             <h4>CONTACT MRUDU</h4>
             <p>Email: hellomrudu.in@gmail.com</p>
@@ -1136,6 +1452,398 @@ function ContactPage() {
       </footer>
     );
   }
+  const productDetails = {
+  "golden-ubtan": {
+  title: "GOLDEN UBTAN",
+  image: goldenUbtan,
+  price: 719,
+  size: "250g",
+
+  description:
+   "A traditional body cleansing ritual crafted with brightening flowers, cooling roots, gentle grains and time-honoured herbs. This powder-to-paste ubtan helps cleanse, soften and refresh the skin while keeping the ritual slow, natural and sensory.",
+
+  usage:
+    "Mix 1-2 teaspoons with water, milk or rose water. Apply evenly on damp skin, gently massage and rinse off.",
+
+  
+
+   heroes: [
+  { img: avarampooImg, title: "AVARAMPOO", desc: "Traditional brightening flower" },
+  { img: licoriceImg, title: "LICORICE", desc: "Supports even-looking skin" },
+  { img: vetiverImg, title: "VETIVER", desc: "Cooling and soothing" },
+  { img: blackRiceImg, title: "BLACK RICE", desc: "Gentle exfoliation" },
+],
+
+
+    ingredients: `
+Green Gram Powder,
+Rice Powder,
+Masoor Dal,
+Orange Peel,
+Licorice,
+White Turmeric,
+Kasturi Turmeric,
+Manjistha,
+Rose Petals,
+Vetiver,
+Aloe Vera,
+Almond,
+Hibiscus,
+Avarampoo,
+Tulsi,
+Neem,
+Sandalwood,
+Anantmool,
+Brahmi,
+Beetroot,
+Chamomile,
+Calendula,
+Blue Lotus,
+White Lotus,
+Moringa,
+Gotu Kola,
+Nagarmotha,
+Wheatgrass
+`,
+  },
+
+  "mango-body-butter": {
+    title: "MANGO BODY BUTTER",
+    image: mangoBodyButter,
+    price: 879,
+    size: "200g",
+    description:
+  "A rich body butter crafted with mango butter, shea butter, cocoa butter and skin-loving oils. It melts into dry skin, helps lock moisture, and leaves the body feeling soft, nourished and comforted without making the ritual feel heavy.",
+
+usage:
+  "Apply generously on clean skin and massage until fully absorbed.",
+
+    heroes: [
+  { img: mangoImg, title: "MANGO BUTTER", desc: "Deep nourishment" },
+  { img: sheaImg, title: "SHEA BUTTER", desc: "Softens dry skin" },
+  { img: cocoaImg, title: "COCOA BUTTER", desc: "Locks moisture" },
+  { img: almondImg, title: "ALMOND OIL", desc: "Smooth finish" },
+],
+    ingredients: `
+Mango Butter,
+Shea Butter,
+Cocoa Butter,
+Sweet Almond Oil,
+Jojoba Oil,
+Vitamin E,
+Arrowroot Powder,
+Calendula Extract,
+Chamomile Extract,
+Aloe Vera Extract
+`,
+  },
+
+  "cloud-melt-cream": {
+    title: "CLOUD MELT CREAM",
+    image: cloudMeltCream,
+    price: 799,
+    size: "200g",
+    description:
+  "A lightweight everyday body cream made for soft hydration and comfort. It blends calming botanicals with gentle moisturising ingredients to keep the skin fresh, smooth and cared for through the day.",
+
+usage:
+  "Massage onto clean skin morning and evening.",
+
+    heroes: [
+  { img: aloeImg, title: "ALOE VERA", desc: "Hydrating comfort" },
+  { img: oatsImg, title: "OAT MILK", desc: "Calming care" },
+  { img: chamomileImg, title: "CHAMOMILE", desc: "Soothing feel" },
+  { img: calendulaImg, title: "CALENDULA", desc: "Skin softness" },
+],
+
+    ingredients: `
+Aloe Vera,
+Oat Milk,
+Vegetable Glycerin,
+Jojoba Oil,
+Sweet Almond Oil,
+Calendula Extract,
+Chamomile Extract,
+Vitamin E,
+Rose Water
+`,
+  },
+
+  "shata-dhauta-ghrita": {
+    title: "SHATA DHAUTA GHRITA",
+    image: shataDautaGhrita,
+    price: 959,
+    size: "100g",
+    description:
+  "An ancient night ritual inspired by repeatedly washed ghee, created to comfort dry, tired-looking skin. It gives a soft, nourishing finish and works beautifully as the final step of a slow night skincare routine.",
+
+usage:
+  "Apply a small amount as the final step of your night routine.",
+
+    heroes: [
+  { img: whiteLotusImg, title: "WHITE LOTUS", desc: "Softness" },
+  { img: blueLotusImg, title: "BLUE LOTUS", desc: "Calming ritual" },
+  { img: saffronImg, title: "SAFFRON", desc: "Radiance" },
+  { img: roseImg, title: "ROSE", desc: "Comfort" },
+],
+    ingredients: `
+Shata Dhauta Ghrita,
+Saffron,
+Rose,
+White Lotus,
+Blue Lotus,
+Aloe Vera,
+Calendula,
+Chamomile,
+Vitamin E
+`,
+  },
+
+  "black-rice-cleansing-powder": {
+    title: "BLACK RICE CLEANSING POWDER",
+    image: blackRiceCleansingPowder,
+    price: 719,
+    size: "100g",
+    description:
+  "A gentle powder cleanser inspired by grain-based Indian rituals. Black rice, calming botanicals and soft herbs come together to cleanse without stripping, leaving the skin feeling smooth, fresh and naturally polished.",
+
+usage:
+  "Mix with water and massage onto damp skin before rinsing.",
+
+    heroes: [
+  { img: blackRiceImg, title: "BLACK RICE", desc: "Gentle polish" },
+  { img: licoriceImg, title: "LICORICE", desc: "Even-looking skin" },
+  { img: roseImg, title: "ROSE", desc: "Soft glow" },
+  { img: vetiverImg, title: "VETIVER", desc: "Cooling care" },
+],
+
+    ingredients: `
+Black Rice,
+Oats,
+Licorice,
+Rose,
+Vetiver,
+Avarampoo,
+White Lotus,
+Blue Lotus,
+Aloe Vera,
+Calendula,
+Chamomile,
+Manjistha
+`,
+  },
+
+  "rosemary-hair-elixir": {
+    title: "ROSEMARY HAIR ELIXIR",
+    image: rosemaryHairElixir,
+    price: 799,
+    size: "100ml",
+    description:
+  "A botanical scalp oil crafted with rosemary, bhringraj, amla and traditional hair herbs. It supports a calming scalp massage ritual while nourishing roots and helping the hair feel stronger and healthier.",
+
+usage:
+  "Massage into scalp and leave for 1-2 hours before washing.",
+heroes: [
+  { img: rosemaryImg, title: "ROSEMARY", desc: "Scalp vitality" },
+  { img: bhringrajImg, title: "BHRINGRAJ", desc: "Root support" },
+  { img: amlaImg, title: "AMLA", desc: "Hair strength" },
+  { img: brahmiImg, title: "BRAHMI", desc: "Scalp care" },
+],
+    ingredients: `
+Rosemary,
+Bhringraj,
+Amla,
+Brahmi,
+Jatamansi,
+Ashwagandha,
+Shankhapushpi,
+Bala,
+Anantmool,
+Guduchi,
+Gotu Kola,
+Nagarmotha,
+Moringa,
+Tagara,
+Vacha,
+Kalonji,
+Sesame Oil,
+Coconut Oil,
+Castor Oil,
+Jojoba Oil,
+Sweet Almond Oil
+`,
+  },
+
+  "hair-wash-powder": {
+    title: "HAIR WASH POWDER",
+    image: hairWashPowder,
+    price: 719,
+    size: "250g",
+    description:
+  "A traditional herbal hair cleansing powder made with shikakai, reetha, amla and softening botanicals. It gently cleanses the scalp, refreshes the roots and leaves hair feeling clean, light and naturally cared for.",
+
+usage:
+  "Mix with water into a paste and massage onto wet scalp before rinsing.",
+
+    heroes: [
+  { img: shikakaiImg, title: "SHIKAKAI", desc: "Natural cleansing" },
+  { img: soapnutImg, title: "REETHA", desc: "Foaming action" },
+  { img: amlaImg, title: "AMLA", desc: "Hair strength" },
+  { img: hibiscusImg, title: "HIBISCUS", desc: "Hair softness" },
+],
+
+    ingredients: `
+Shikakai,
+Reetha,
+Amla,
+Bhringraj,
+Brahmi,
+Hibiscus,
+Neem,
+Tulsi,
+Rosemary,
+Indigo Leaf,
+Henna Leaf,
+Karisalankanni,
+Moringa,
+Gotu Kola,
+Licorice Root,
+Anantmool,
+Guduchi,
+Tagara,
+Vacha,
+Lemongrass,
+Thyme,
+Guava Leaves,
+Nagalinga Pushpam,
+Bilva Leaf,
+Wheatgrass,
+Orange Peel,
+Lemon Peel
+`,
+  },
+};
+function ProductDetailsPage({
+  addToCart,
+  cart,
+  setCart,
+  cartOpen,
+  setCartOpen,
+  increaseQty,
+  decreaseQty,
+}) {
+  const { slug } = useParams();
+  const product = productDetails[slug];
+  const [showIngredients, setShowIngredients] = useState(false);
+
+  if (!product) return <h1>Product Not Found</h1>;
+
+  return (
+    <div className="page">
+      <Header
+        cartCount={cart.reduce((sum, item) => sum + item.qty, 0)}
+openCart={() => setCartOpen(true)}
+        openSearch={() => {}}
+        openWishlist={() => {}}
+        wishlistCount={0}
+      />
+
+      <section className="product-details-page">
+        <div className="product-top">
+          <img src={product.image} alt={product.title} className="detail-image" />
+
+          <div className="product-info">
+            <p className="small-title">MRUDU RITUAL</p>
+            <h1>{product.title}</h1>
+
+            <span className="detail-size">{product.size}</span>
+
+            <h2>₹{product.price}</h2>
+
+            <p className="detail-desc">{product.description}</p>
+
+            <button
+              onClick={() =>
+                addToCart({
+                  name: product.title,
+                  image: product.image,
+                  offer: product.price,
+                  subtitle: product.size,
+                })
+              }
+            >
+              Add To Cart
+            </button>
+          </div>
+        </div>
+
+        <h2 className="product-section-title">What's Inside</h2>
+
+        <div className="hero-grid">
+  {product.heroes.map((hero, index) => (
+    <div className="hero-card" key={index}>
+      {hero.img && (
+        <img
+          src={hero.img}
+          alt={hero.title}
+          className="ingredient-img"
+        />
+      )}
+
+      <h3>{hero.title}</h3>
+      <p>{hero.desc}</p>
+    </div>
+  ))}
+</div>
+
+        <button
+          className="view-ingredients-btn"
+          onClick={() => setShowIngredients(!showIngredients)}
+        >
+          {showIngredients ? "Hide Ingredient List" : "View Ingredient List"}
+        </button>
+
+        {showIngredients && (
+  <div className="ingredients-modal">
+    <div className="ingredients-content">
+      <button
+        className="ingredients-close"
+        onClick={() => setShowIngredients(false)}
+      >
+        ×
+      </button>
+
+      <p>
+        {product.ingredients
+          .split(",")
+          .map((item) => item.trim())
+          .filter(Boolean)
+          .join(", ")}
+      </p>
+    </div>
+  </div>
+)}
+
+        <div className="product-usage">
+          <h2>How To Use</h2>
+          <p>{product.usage}</p>
+        </div>
+      </section>
+
+      <Footer />
+      <CartDrawer
+  cart={cart}
+  setCart={setCart}
+  isOpen={cartOpen}
+  closeCart={() => setCartOpen(false)}
+  increaseQty={increaseQty}
+  decreaseQty={decreaseQty}
+/>
+    </div>
+  );
+}
+
+
 
   function App() {
     const [cart, setCart] = useState([]);
@@ -1193,6 +1901,7 @@ function ContactPage() {
         return [...prev, product];
       });
     };
+    
 
     return (
       <Routes>
@@ -1220,49 +1929,88 @@ function ContactPage() {
         />
 
         <Route
-          path="/dawn"
-          element={
-            <DawnPage
-  cart={cart}
-  setCart={setCart}
-  addToCart={addToCart}
-              cartOpen={cartOpen}
-              setCartOpen={setCartOpen}
-              increaseQty={increaseQty}
-              decreaseQty={decreaseQty}
-              searchOpen={searchOpen}
-              setSearchOpen={setSearchOpen}
-              wishlistOpen={wishlistOpen}
-              setWishlistOpen={setWishlistOpen}
-              searchTerm={searchTerm}
-              setSearchTerm={setSearchTerm}
-              wishlist={wishlist}
-              toggleWishlist={toggleWishlist}
-            />
-          }
-        />
+  path="/body"
+  element={
+   <DawnPage
+      cart={cart}
+      setCart={setCart}
+      addToCart={addToCart}
+      cartOpen={cartOpen}
+      setCartOpen={setCartOpen}
+      increaseQty={increaseQty}
+      decreaseQty={decreaseQty}
+      searchOpen={searchOpen}
+      setSearchOpen={setSearchOpen}
+      wishlistOpen={wishlistOpen}
+      setWishlistOpen={setWishlistOpen}
+      searchTerm={searchTerm}
+      setSearchTerm={setSearchTerm}
+      wishlist={wishlist}
+      toggleWishlist={toggleWishlist}
+    />
+  }
+/>
+
+<Route
+  path="/face"
+  element={
+    <ReflectionPage
+      cart={cart}
+      setCart={setCart}
+      addToCart={addToCart}
+      cartOpen={cartOpen}
+      setCartOpen={setCartOpen}
+      increaseQty={increaseQty}
+      decreaseQty={decreaseQty}
+      searchOpen={searchOpen}
+      setSearchOpen={setSearchOpen}
+      wishlistOpen={wishlistOpen}
+      setWishlistOpen={setWishlistOpen}
+      searchTerm={searchTerm}
+      setSearchTerm={setSearchTerm}
+      wishlist={wishlist}
+      toggleWishlist={toggleWishlist}
+    />
+  }
+/>
         <Route
-          path="/reflection"
-          element={
-            <ReflectionPage
-  cart={cart}
-  setCart={setCart}
-  addToCart={addToCart}
-              cartOpen={cartOpen}
-              setCartOpen={setCartOpen}
-              increaseQty={increaseQty}
-              decreaseQty={decreaseQty}
-              searchOpen={searchOpen}
-              setSearchOpen={setSearchOpen}
-              wishlistOpen={wishlistOpen}
-              setWishlistOpen={setWishlistOpen}
-              searchTerm={searchTerm}
-              setSearchTerm={setSearchTerm}
-              wishlist={wishlist}
-              toggleWishlist={toggleWishlist}
-            />
-          }
-        />
+  path="/hair"
+  element={
+    <HairPage
+      cart={cart}
+      setCart={setCart}
+      addToCart={addToCart}
+      cartOpen={cartOpen}
+      setCartOpen={setCartOpen}
+      increaseQty={increaseQty}
+      decreaseQty={decreaseQty}
+      searchOpen={searchOpen}
+      setSearchOpen={setSearchOpen}
+      wishlistOpen={wishlistOpen}
+      setWishlistOpen={setWishlistOpen}
+      searchTerm={searchTerm}
+      setSearchTerm={setSearchTerm}
+      wishlist={wishlist}
+      toggleWishlist={toggleWishlist}
+    />
+  }
+/>
+<Route
+  path="/product/:slug"
+  element={
+    <ProductDetailsPage
+      addToCart={addToCart}
+      cart={cart}
+      setCart={setCart}
+      cartOpen={cartOpen}
+      setCartOpen={setCartOpen}
+      increaseQty={increaseQty}
+      decreaseQty={decreaseQty}
+    />
+  }
+/>
+  
+
         <Route
   path="/success"
   element={<SuccessPage />}
